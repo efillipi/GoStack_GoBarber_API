@@ -1,6 +1,7 @@
 import Agendamento from '../models/Agendamento'
+import User from '../models/User'
 import AgendatmentosRepositorio from '../respositorios/AgendatmentosRepositorio'
-import { getCustomRepository } from 'typeorm'
+import { getCustomRepository, getRepository } from 'typeorm'
 import AppError from '../errors/AppError';
 
 
@@ -15,13 +16,15 @@ class CriarAgendamentoService {
 
         const agendatmentosRepositorio = getCustomRepository(AgendatmentosRepositorio);
 
-        // const userAlreadyExists = await agendatmentosRepositorio.userAlreadyExists(
-        //     provider_id
-        // )
-        
-        // if (userAlreadyExists) {
-        //     throw new AppError('Este Usuario não existe')
-        // }
+        const usersRepositorio = getRepository(User)
+
+        const userAlreadyExists = await usersRepositorio.findOne(
+            provider_id
+        )
+
+        if (!userAlreadyExists) {
+            throw new AppError('Este Usuario não existe')
+        }
 
         const verificarHoraAgendamento = await agendatmentosRepositorio.verificarHoraAgendamento(
             dataAgendamento

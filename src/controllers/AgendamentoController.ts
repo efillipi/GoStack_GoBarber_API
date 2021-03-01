@@ -8,29 +8,40 @@ class AgendamentoController {
 
     async getall(request: Request, response: Response) {
 
-        const agendatmentosRepositorio = getCustomRepository(AgendatmentoRepositorio)
-        const agendamentos = await agendatmentosRepositorio.find()
+        try {
+            const agendatmentosRepositorio = getCustomRepository(AgendatmentoRepositorio)
+            const agendamentos = await agendatmentosRepositorio.find()
 
-        return response.status(200).json(agendamentos)
+            return response.status(200).json(agendamentos)
+        } catch (err) {
+
+            return response.status(err.statusCode).json({ error: err.message })
+
+        }
     }
 
     async create(request: Request, response: Response) {
 
-        const {
-            provider_id,
-            dataAgendamento,
-        } = request.body;
+        try {
+            const {
+                provider_id,
+                dataAgendamento,
+            } = request.body;
 
-        const parseData = startOfHour(parseISO(dataAgendamento))
+            const parseData = startOfHour(parseISO(dataAgendamento))
 
-        const criarAgendamentoServices = new CriarAgendamentoService()
+            const criarAgendamentoServices = new CriarAgendamentoService()
 
-        const agendamento = await criarAgendamentoServices.execute({
-            provider_id,
-            dataAgendamento: parseData
-        })
+            const agendamento = await criarAgendamentoServices.execute({
+                provider_id,
+                dataAgendamento: parseData
+            })
 
-        return response.status(201).json(agendamento)
+            return response.status(201).json(agendamento)
+        } catch (err) {
+            return response.status(err.statusCode).json({ error: err.message })
+
+        }
 
 
     }

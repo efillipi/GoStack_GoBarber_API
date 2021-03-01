@@ -18,41 +18,55 @@ class UserController {
 
     async create(request: Request, response: Response) {
 
-        const {
-            name,
-            email,
-            password,
-        } = request.body;
+        try {
+            const {
+                name,
+                email,
+                password,
+            } = request.body;
 
-        const createUserServices = new CreateUserService()
+            const createUserServices = new CreateUserService()
 
-        const user = await createUserServices.execute({
-            name,
-            email,
-            password
-        })
+            const user = await createUserServices.execute({
+                name,
+                email,
+                password
+            })
 
-        delete user.password;
+            delete user.password;
 
-        return response.status(201).json(user)
+            return response.status(201).json(user)
+        } catch (err) {
+            return response.status(err.statusCode).json({ error: err.message })
+
+        }
     }
     async avatar(request: Request, response: Response) {
 
-        const { id } = request.user
+        try {
+            const { id } = request.user
 
-        const { filename } = request.file
+            const { filename } = request.file
 
-        const updateUserAvatarService = new UpdateUserAvatarService()
+            const updateUserAvatarService = new UpdateUserAvatarService()
 
-        const updateUserAvatar = await updateUserAvatarService.execute({
-            user_id: id,
-            avatarFilename: filename
-        })
+            const updateUserAvatar = await updateUserAvatarService.execute({
+                user_id: id,
+                avatarFilename: filename
+            })
 
-        return response.status(200).json(updateUserAvatar)
+            return response.status(200).json(updateUserAvatar)
+        } catch (err) {
+            return response.status(err.statusCode).json({ error: err.message })
+
+        }
     }
 
 }
+
+
+
+
 
 
 

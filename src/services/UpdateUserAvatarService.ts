@@ -22,7 +22,7 @@ class UpdateUserAvatarService {
         const user = await usersRepositorio.findOne(user_id)
 
         if (!user) {
-            throw new AppError('apenas usuários autênticos mudam de avatar')
+            throw new AppError('apenas usuários autênticos mudam de avatar', 401)
         }
 
         if (user.avatar) {
