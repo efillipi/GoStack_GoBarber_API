@@ -4,6 +4,7 @@ import { getRepository } from 'typeorm'
 import AppError from '../errors/AppError';
 import { compare, compareSync } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
+import authConfig from '../config/auth'
 
 
 interface Request {
@@ -19,6 +20,8 @@ interface Response {
 class AuthUserService {
 
     public async execute({ email, password }: Request): Promise<Response> {
+
+        const { secret, expiresIn } = authConfig.jtw
 
         const usersRepositorio = getRepository(User);
 
@@ -38,15 +41,17 @@ class AuthUserService {
 
         delete user.password
 
+
+
         const token = sign(
             {
-               
+
             },
-            process.env.JWT_KEY,
+            secret,
             {
                 subject: user.id,
-                expiresIn: process.env.JTW_expiresIn,
-                
+                expiresIn,
+
             }
         );
 

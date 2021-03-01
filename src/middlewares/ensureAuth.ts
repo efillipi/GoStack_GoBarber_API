@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import AppError from '../errors/AppError';
+import authConfig from '../config/auth'
 
 interface TokenPayload {
   iat: number;
@@ -9,6 +10,8 @@ interface TokenPayload {
 }
 
 export default function ensureAuth(request: Request, response: Response, next: NextFunction): void {
+
+  const {secret} = authConfig.jtw
 
   const authHeader = request.headers.authorization;
 
@@ -21,7 +24,7 @@ export default function ensureAuth(request: Request, response: Response, next: N
 
   try {
 
-    const decode = verify(token, process.env.JWT_KEY)
+    const decode = verify(token, secret)
 
     const { sub } = decode as TokenPayload
 
