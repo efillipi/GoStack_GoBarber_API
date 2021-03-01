@@ -1,0 +1,47 @@
+import path from 'path'
+import fs from 'fs'
+import AppError from '@shared/errors/AppError';
+import User from '@modules/users//infra/typeorm/entities/User'
+import uploadConfig from '@config/upload'
+import IUsersRepository from '../repositories/IUsersRepository';
+
+interface IRequest {
+    user_id: string
+    avatarFilename: string;
+}
+
+class UpdateUserAvatarService {
+
+    constructor(private usersRepository: IUsersRepository) { }
+
+    public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
+
+
+        const user = await this.usersRepository.findById(user_id)
+
+        if (!user) {
+            throw new AppError('apenas usuários autênticos mudam de avatar', 401)
+        }
+
+        if (user.avatar) {
+            const userAvatarFilePatch = path.join(uploadConfig.directory, user.avatar)
+            const userAvatarFileExists = await fs.promises.stat(userAvatarFilePatch)
+
+            if (userAvatarFileExists) {
+                await fs.promises.unlink(userAvatarFilePatch)
+            }
+        }
+
+        user.avatar = avatarFilename
+
+        await this.usersRepository.save(user)
+
+        delete user.password
+
+        return user;
+    }
+
+}
+
+
+export default UpdateUserAvatarService;

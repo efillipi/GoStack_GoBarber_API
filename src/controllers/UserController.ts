@@ -1,15 +1,12 @@
 import { Request, Response } from 'express'
-import UsersRepositorio from '../respositorios/UsersRepositorio'
-import CreateUserService from '../services/CreateUserService'
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService'
-import { getCustomRepository } from 'typeorm'
-
+import UsersRepositorio from '@modules/users/infra/typeorm/repositories/UsersRepositorio'
+import CreateUserService from '@modules/users/services/CreateUserService'
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService'
 
 class UserController {
 
     async getall(request: Request, response: Response) {
-
-        const usersRepositorio = getCustomRepository(UsersRepositorio)
+        const usersRepositorio = new UsersRepositorio()
 
         const users = await usersRepositorio.find()
 
@@ -18,13 +15,15 @@ class UserController {
 
     async create(request: Request, response: Response) {
 
+        const usersRepositorio = new UsersRepositorio()
+
         const {
             name,
             email,
             password,
         } = request.body;
 
-        const createUserServices = new CreateUserService()
+        const createUserServices = new CreateUserService(usersRepositorio)
 
         const user = await createUserServices.execute({
             name,
@@ -37,15 +36,17 @@ class UserController {
         return response.status(201).json(user)
 
     }
-    
+
     async avatar(request: Request, response: Response) {
+
+        const usersRepositorio = new UsersRepositorio()
 
 
         const { id } = request.user
 
         const { filename } = request.file
 
-        const updateUserAvatarService = new UpdateUserAvatarService()
+        const updateUserAvatarService = new UpdateUserAvatarService(usersRepositorio)
 
         const updateUserAvatar = await updateUserAvatarService.execute({
             user_id: id,
