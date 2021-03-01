@@ -1,28 +1,40 @@
 import { Request, Response, NextFunction } from "express";
-import { decode, verify } from "jsonwebtoken";
-import { getCustomRepository } from "typeorm";
-import UserRepository from "../respositorios/UsersRepositorio";
-import User from "../models/User";
+import { verify } from "jsonwebtoken";
 import AppError from '../errors/AppError';
-import AuthConfig from '../config/auth'
 
+interface TokenPayload {
+  iat: number;
+  exp: number;
+  sub: string;
+}
 
-export default function ensureAuth( request : Request, response :  Response, next : NextFunction) : void{
+export default function ensureAuth(request: Request, response: Response, next: NextFunction): void {
 
   const authHeader = request.headers.authorization;
 
 
-  if(!authHeader){
+  if (!authHeader) {
     throw new AppError('Falha na Autenticação, JTW token is missing', 401)
   }
 
-  const [, token] = authHeader?.split(" ");
+  const [, token] = authHeader.split(" ")
 
-  const decode = verify(token, AuthConfig.jtw.secret)
+  try {
 
+    const decode = verify(token, process.env.JWT_KEY)
 
+    const { sub } = decode as TokenPayload
 
+    request.user = {
+      id: sub
+    }
 
+    return next()
 
+  } catch (error) {
+
+    throw new AppError('Falha na Autenticação, Invalid JTW token', 401)
+
+  }
 
 }

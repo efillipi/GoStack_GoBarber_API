@@ -16,7 +16,6 @@ class AgendamentoController {
 
     async create(request: Request, response: Response) {
 
-
         const {
             provider_id,
             dataAgendamento,

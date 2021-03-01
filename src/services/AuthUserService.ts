@@ -4,7 +4,6 @@ import { getRepository } from 'typeorm'
 import AppError from '../errors/AppError';
 import { compare, compareSync } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
-import AuthConfig from '../config/auth'
 
 
 interface Request {
@@ -41,11 +40,13 @@ class AuthUserService {
 
         const token = sign(
             {
+               
             },
-            AuthConfig.jtw.secret,
+            process.env.JWT_KEY,
             {
                 subject: user.id,
-                expiresIn: AuthConfig.jtw.expiresIn
+                expiresIn: process.env.JTW_expiresIn,
+                
             }
         );
 
