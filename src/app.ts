@@ -17,9 +17,12 @@ app.use(
 
         if (err instanceof AppError) {
             return response.status(err.statusCode).json({
+                status: "Error",
                 message: err.message
             })
         }
+
+        console.error('err : ',err);
 
         return response.status(500).json({
             status: "Error",
