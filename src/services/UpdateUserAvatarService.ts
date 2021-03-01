@@ -37,6 +37,8 @@ class UpdateUserAvatarService {
 
         await usersRepositorio.save(user)
 
+        delete user.password
+
         return user;
     }
 

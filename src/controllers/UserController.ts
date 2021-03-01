@@ -40,8 +40,6 @@ class UserController {
 
         const { id } = request.user
 
-        console.log(request.file)
-
         const { filename } = request.file
 
         const updateUserAvatarService = new UpdateUserAvatarService()
