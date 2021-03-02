@@ -2,14 +2,11 @@ import { Request, Response } from 'express'
 import { startOfHour, parseISO } from 'date-fns';
 import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository'
 import NewAppointmentService from '@modules/appointments/services/NewAppointmentService'
-
 import { container } from 'tsyringe'
-
-
 
 class AppointmentController {
 
-    async getall(request: Request, response: Response) {
+    async getall(request: Request, response: Response) : Promise<Response> {
 
         const appointmentRepository = new AppointmentRepository()
 

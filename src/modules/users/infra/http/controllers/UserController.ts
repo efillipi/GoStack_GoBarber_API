@@ -8,7 +8,7 @@ import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarSer
 
 class UserController {
 
-    async getall(request: Request, response: Response) {
+    async getall(request: Request, response: Response): Promise<Response> {
         const usersRepositorio = new UsersRepositorio()
 
         const users = await usersRepositorio.find()
@@ -16,14 +16,14 @@ class UserController {
         return response.status(200).json(users)
     }
 
-    async create(request: Request, response: Response) {
+    async create(request: Request, response: Response): Promise<Response> {
 
         const {
             name,
             email,
             password,
         } = request.body;
-        
+
         const createUserServices = container.resolve(CreateUserService)
 
         const user = await createUserServices.execute({
@@ -38,11 +38,11 @@ class UserController {
 
     }
 
-    async avatar(request: Request, response: Response) {
+    async avatar(request: Request, response: Response): Promise<Response> {
 
         const { id } = request.user
         const { filename } = request.file
-        
+
         const updateUserAvatarService = container.resolve(UpdateUserAvatarService)
 
         const updateUserAvatar = await updateUserAvatarService.execute({
