@@ -1,21 +1,17 @@
 import { Request, Response } from 'express'
+import { container } from 'tsyringe'
 import AuthUserService from '@modules/users/services/AuthUserService'
-import UsersRepositorio from '@modules/users/infra/typeorm/repositories/UsersRepositorio'
-
-
 
 class SessionController {
 
     async create(request: Request, response: Response) {
-
-        const usersRepositorio = new UsersRepositorio()
 
         const {
             email,
             password
         } = request.body
 
-        const authUserService = new AuthUserService(usersRepositorio)
+        const authUserService = container.resolve(AuthUserService)
 
         const { token, user } = await authUserService.execute({
             email,

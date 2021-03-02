@@ -6,7 +6,7 @@ const AppointmentsRouter = Router();
 AppointmentsRouter.use(ensureAuth)
 
 
-import AppointmentController from '../../../../../controllers/AppointmentController'
+import AppointmentController from '../controllers/AppointmentController'
 const appointmentController = new AppointmentController();
 
 AppointmentsRouter.get('/', appointmentController.getall)

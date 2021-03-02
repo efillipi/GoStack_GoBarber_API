@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import '@shared/infra/typeorm'
-import '@shared/Container/index'
+import '@shared/Container'
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors'
 import routes from '@shared/infra/http/routes/index'
@@ -10,9 +10,7 @@ const app = express();
 app.use(express.json())
 app.use(routes);
 
-
 app.use('/files', express.static(uploadConfig.directory))
-
 
 app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {

@@ -12,8 +12,8 @@ interface IRequest {
 class NewAppointmentService {
 
     constructor(
-        @inject(Appointment)
-        private appointmentsRepository: IAppointmentRepository
+        @inject('AppointmentRepository')
+        private appointmentsRepository: IAppointmentRepository,
     ) { }
 
     public async execute({ provider_id, dateAppointment, }: IRequest): Promise<Appointment> {

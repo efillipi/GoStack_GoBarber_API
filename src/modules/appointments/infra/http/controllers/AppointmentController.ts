@@ -3,6 +3,8 @@ import { startOfHour, parseISO } from 'date-fns';
 import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository'
 import NewAppointmentService from '@modules/appointments/services/NewAppointmentService'
 
+import { container } from 'tsyringe'
+
 
 
 class AppointmentController {
@@ -18,7 +20,7 @@ class AppointmentController {
 
     async create(request: Request, response: Response) {
 
-        const appointmentRepository = new AppointmentRepository()
+        const newAppointmentServices = container.resolve(NewAppointmentService)
 
         const {
             provider_id,
@@ -26,8 +28,6 @@ class AppointmentController {
         } = request.body;
 
         const parseData = startOfHour(parseISO(dateAppointment))
-
-        const newAppointmentServices = new NewAppointmentService(appointmentRepository)
 
         const appointment = await newAppointmentServices.execute({
             provider_id,
