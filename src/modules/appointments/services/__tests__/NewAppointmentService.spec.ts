@@ -27,7 +27,7 @@ describe('CreateAppointment', () => {
 
         const dateAppointment = new Date(2021, 2, 10, 11)
 
-        const appointment_one = await createAppointment.execute({
+        await createAppointment.execute({
             dateAppointment,
             provider_id: '123123',
         });
@@ -46,7 +46,7 @@ describe('CreateAppointment', () => {
             fakeAppointmentsRepository,
         );
 
-        const appointment = await createAppointment.execute({
+        await createAppointment.execute({
             dateAppointment: new Date(),
             provider_id: '123123',
         });

@@ -28,7 +28,7 @@ describe('CreateUser', () => {
             fakeUserRepository,
         );
 
-        const user = await createUserService.execute({
+        await createUserService.execute({
             email: "user@example.com",
             name: "User Example",
             password: "123456"
@@ -41,5 +41,22 @@ describe('CreateUser', () => {
                 password: "123456"
             })
         ).rejects.toBeInstanceOf(AppError);
+    });
+
+    it('Show appointments', async () => {
+        const fakeUserRepository = new FakeUserRepository();
+        const createUserService = new CreateUserService(
+            fakeUserRepository,
+        );
+
+        await createUserService.execute({
+            email: "user@example.com",
+            name: "User Example",
+            password: "123456"
+        });
+
+        const users = await fakeUserRepository.find()
+
+        expect(users.length).toBe(1)
     });
 });

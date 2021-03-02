@@ -67,14 +67,12 @@ describe('AuthUserService', () => {
             fakeUserRepository,
         );
 
-        const new_user = await createUserService.execute({
+        await createUserService.execute({
             email: "user@example.com",
             name: "User Example",
             password: "123456"
         });
-
-
-
+        
         expect(
             authUserService.execute({
                 email: "user_invalid@example.com",
