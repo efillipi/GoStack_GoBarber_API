@@ -1,5 +1,7 @@
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 const { compilerOptions } = require('./tsconfig.json');
+require('dotenv').config();
+
 
 /*
  * For a detailed explanation regarding each configuration property, visit:

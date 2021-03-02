@@ -43,14 +43,11 @@ class AuthUserService {
         delete user.password
 
         const token = sign(
-            {
-
-            },
+            {},
             secret,
             {
                 subject: user.id,
                 expiresIn,
-
             }
         );
 
