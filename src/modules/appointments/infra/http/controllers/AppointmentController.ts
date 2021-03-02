@@ -6,7 +6,7 @@ import { container } from 'tsyringe'
 
 class AppointmentController {
 
-    async getall(request: Request, response: Response) : Promise<Response> {
+    async getall(request: Request, response: Response): Promise<Response> {
 
         const appointmentRepository = new AppointmentRepository()
 
@@ -15,7 +15,7 @@ class AppointmentController {
         return response.status(200).json(appointments)
     }
 
-    async create(request: Request, response: Response) {
+    async create(request: Request, response: Response): Promise<Response> {
 
         const newAppointmentServices = container.resolve(NewAppointmentService)
 
