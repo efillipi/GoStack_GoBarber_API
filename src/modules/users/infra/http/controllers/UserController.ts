@@ -37,23 +37,6 @@ class UserController {
         return response.status(201).json(user)
 
     }
-
-    public async avatar(request: Request, response: Response): Promise<Response> {
-
-        const { id } = request.user
-        const { filename } = request.file
-
-        const updateUserAvatarService = container.resolve(UpdateUserAvatarService)
-
-        const updateUserAvatar = await updateUserAvatarService.execute({
-            user_id: id,
-            avatarFilename: filename
-        })
-
-        return response.status(200).json(updateUserAvatar)
-
-    }
-
 }
 
 
