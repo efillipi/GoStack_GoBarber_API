@@ -1,6 +1,6 @@
-import FakeUserRepository from '../repositories/Fakes/FakeUserRepository';
-import CreateUserService from './CreateUserService';
-import AuthUserService from './AuthUserService';
+import FakeUserRepository from '@modules/users/repositories/Fakes/FakeUserRepository'
+import CreateUserService from '@modules/users/services/CreateUserService'
+import AuthUserService from '@modules/users/services/AuthUserService';
 import AppError from '@shared/errors/AppError';
 
 describe('AuthUserService', () => {
