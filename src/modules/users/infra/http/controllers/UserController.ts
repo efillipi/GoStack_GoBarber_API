@@ -8,7 +8,7 @@ import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarSer
 
 class UserController {
 
-    async getall(request: Request, response: Response): Promise<Response> {
+    public async getall(request: Request, response: Response): Promise<Response> {
         const usersRepositorio = new UsersRepositorio()
 
         const users = await usersRepositorio.find()
@@ -16,7 +16,7 @@ class UserController {
         return response.status(200).json(users)
     }
 
-    async create(request: Request, response: Response): Promise<Response> {
+    public async create(request: Request, response: Response): Promise<Response> {
 
         const {
             name,
@@ -38,7 +38,7 @@ class UserController {
 
     }
 
-    async avatar(request: Request, response: Response): Promise<Response> {
+    public async avatar(request: Request, response: Response): Promise<Response> {
 
         const { id } = request.user
         const { filename } = request.file

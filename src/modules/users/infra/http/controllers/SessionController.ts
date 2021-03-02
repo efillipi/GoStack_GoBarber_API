@@ -4,7 +4,7 @@ import AuthUserService from '@modules/users/services/AuthUserService'
 
 class SessionController {
 
-    async create(request: Request, response: Response): Promise<Response> {
+    public async create(request: Request, response: Response): Promise<Response> {
 
         const {
             email,
