@@ -1,61 +1,63 @@
 import User from '@modules/users/infra/typeorm/entities/User'
 import AppError from '@shared/errors/AppError';
-import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import authConfig from '@config/auth'
 import IUsersRepository from '../repositories/IUsersRepository';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
 import { injectable, inject } from 'tsyringe'
 
 interface IRequest {
-    email: string;
-    password: string
+  email: string;
+  password: string
 }
 
 interface IResponse {
-    user: User;
-    token: string
+  user: User;
+  token: string
 }
 
 @injectable()
 class AuthUserService {
 
-    constructor(
-        @inject('UsersRepositorio')
-        private usersRepository: IUsersRepository,
-    ) { }
+  constructor(
+    @inject('UsersRepositorio')
+    private usersRepository: IUsersRepository,
 
-    public async execute({ email, password }: IRequest): Promise<IResponse> {
+    @inject('BCryptHashProvider')
+    private hashProvider : IHashProvider,
+  ) { }
 
-        const { secret, expiresIn } = authConfig.jtw
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
 
-        const user = await this.usersRepository.findByEmail(email)
+    const { secret, expiresIn } = authConfig.jtw
+    const user = await this.usersRepository.findByEmail(email)
 
-        if (!user) {
-            throw new AppError('Falha na Autenticação', 401)
-        }
-
-        const matchPassword = await compare(password, user.password);
-
-        if (!matchPassword) {
-            throw new AppError('Falha na Autenticação', 401)
-        }
-
-        delete user.password
-
-        const token = sign(
-            {},
-            secret,
-            {
-                subject: user.id,
-                expiresIn,
-            }
-        );
-
-        return {
-            user,
-            token
-        }
+    if (!user) {
+      throw new AppError('Falha na Autenticação', 401)
     }
+
+    const matchPassword = await this.hashProvider.comparreHash(password, user.password);
+
+    if (!matchPassword) {
+      throw new AppError('Falha na Autenticação', 401)
+    }
+
+    delete user.password
+
+    const token = sign(
+      {},
+      secret,
+      {
+        subject: user.id,
+        expiresIn,
+      }
+    );
+
+    return {
+      user,
+      token
+    }
+  }
 
 }
 

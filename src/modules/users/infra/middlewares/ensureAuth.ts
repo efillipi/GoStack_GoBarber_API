@@ -12,9 +12,7 @@ interface TokenPayload {
 export default function ensureAuth(request: Request, response: Response, next: NextFunction): void {
 
   const {secret} = authConfig.jtw
-
   const authHeader = request.headers.authorization;
-
 
   if (!authHeader) {
     throw new AppError('Falha na Autenticação, JTW token is missing', 401)
