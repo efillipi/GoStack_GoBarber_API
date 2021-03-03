@@ -9,7 +9,6 @@ class JWTAuthProvider implements IAuthProvider {
 
     const { secret, expiresIn } = authConfig.jtw
 
-    console.log(user)
     const token = sign(
       {},
       secret,
