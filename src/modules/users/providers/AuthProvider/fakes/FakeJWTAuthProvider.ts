@@ -1,35 +1,18 @@
 import IAuthProvider from '@modules/users/providers/AuthProvider/models/IAuthProvider'
-import authConfig from '@config/auth'
-import { sign } from 'jsonwebtoken'
 import User from '@modules/users/infra/typeorm/entities/User';
 
-class JWTAuthProvider implements IAuthProvider {
+class FakeJWTAuthProvider implements IAuthProvider {
 
   public async sing(user: User): Promise<string> {
 
-    const { secret, expiresIn } = authConfig.jtw
-
-    const token = sign(
-      {},
-      secret,
-      {
-        subject: user.id,
-        expiresIn,
-      }
-    );
-
-
+    const token = "UHOID*(sa7ffs70saf79faynf7fnyn0y8FFSYFSYFY&FNAY&F&Y&FYS"
 
     return token
   }
 
   public async verify(payload: string): Promise<boolean> {
-
-
-
-    return
+    return true
   }
 
-
 }
-export default JWTAuthProvider
+export default FakeJWTAuthProvider
