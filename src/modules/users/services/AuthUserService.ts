@@ -1,6 +1,5 @@
 import User from '@modules/users/infra/typeorm/entities/User'
 import AppError from '@shared/errors/AppError';
-import authConfig from '@config/auth'
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
 import IAuthProvider from '@modules/users/providers/AuthProvider/models/IAuthProvider'
@@ -24,15 +23,14 @@ class AuthUserService {
     private usersRepository: IUsersRepository,
 
     @inject('BCryptHashProvider')
-    private hashProvider : IHashProvider,
+    private hashProvider: IHashProvider,
 
     @inject('AuthProvider')
-    private authProvider : IAuthProvider
+    private authProvider: IAuthProvider
   ) { }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
 
-    const { secret, expiresIn } = authConfig.jtw
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {

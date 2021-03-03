@@ -1,5 +1,6 @@
 import FakeUserRepository from '@modules/users/repositories/Fakes/FakeUserRepository'
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider'
+import FakeJWTAuthProvider from '@modules/users/providers/AuthProvider/fakes/FakeJWTAuthProvider'
 import AuthUserService from '@modules/users/services/AuthUserService';
 import CreateUserService from '@modules/users/services/CreateUserService'
 
@@ -10,7 +11,8 @@ describe('AuthUserService', () => {
   it('must be able to log in to the application', async () => {
     const fakeUserRepository = new FakeUserRepository();
     const fakeHashProvider = new FakeHashProvider();
-    const authUserService = new AuthUserService(fakeUserRepository,fakeHashProvider);
+    const fakeJWTAuthProvider = new FakeJWTAuthProvider();
+    const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
     const createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
 
     await createUserService.execute({
@@ -31,11 +33,10 @@ describe('AuthUserService', () => {
   it('should not be able to log in with invalid password', async () => {
     const fakeUserRepository = new FakeUserRepository();
     const fakeHashProvider = new FakeHashProvider();
-    const authUserService = new AuthUserService(
-      fakeUserRepository,fakeHashProvider
-    );
+    const fakeJWTAuthProvider = new FakeJWTAuthProvider();
+    const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
     const createUserService = new CreateUserService(
-      fakeUserRepository,fakeHashProvider
+      fakeUserRepository, fakeHashProvider
     );
 
     const new_user = await createUserService.execute({
@@ -56,11 +57,10 @@ describe('AuthUserService', () => {
   it('should not be able to log in with invalid email', async () => {
     const fakeUserRepository = new FakeUserRepository();
     const fakeHashProvider = new FakeHashProvider();
-    const authUserService = new AuthUserService(
-      fakeUserRepository,fakeHashProvider
-    );
+    const fakeJWTAuthProvider = new FakeJWTAuthProvider();
+    const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
     const createUserService = new CreateUserService(
-      fakeUserRepository,fakeHashProvider
+      fakeUserRepository, fakeHashProvider
     );
 
     await createUserService.execute({
