@@ -59,15 +59,6 @@ describe('AuthUserService', () => {
     const fakeHashProvider = new FakeHashProvider();
     const fakeJWTAuthProvider = new FakeJWTAuthProvider();
     const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
-    const createUserService = new CreateUserService(
-      fakeUserRepository, fakeHashProvider
-    );
-
-    await createUserService.execute({
-      email: "user@example.com",
-      name: "User Example",
-      password: "123456"
-    });
 
     expect(
       authUserService.execute({

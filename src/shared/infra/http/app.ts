@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json())
 app.use(routes);
 
-app.use('/files', express.static(uploadConfig.directory))
+app.use('/files', express.static(uploadConfig.uploadsFolder))
 
 app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {

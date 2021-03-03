@@ -1,25 +1,26 @@
-import { request } from 'express'
 import multer from 'multer'
-import patch from 'path'
+import path from 'path'
 import crypto from 'crypto'
 
-const tmpFolder = patch.resolve(__dirname, '..', '..', 'tmp','avatar')
+const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp')
 
 export default {
 
-    directory : tmpFolder,
-    storage: multer.diskStorage({
+  tmpFolder: tmpFolder,
+  uploadsFolder: path.resolve(tmpFolder, 'uploads'),
 
-        destination: tmpFolder,
+  storage: multer.diskStorage({
 
-        filename: (request, file, callback) => {
+    destination: tmpFolder,
 
-            const fileHash = crypto.randomBytes(10).toString('HEX');
-            const filename = `${fileHash}_${file.originalname}`;
+    filename: (request, file, callback) => {
 
-            return callback(null, filename);
-        }
-    }),
+      const fileHash = crypto.randomBytes(10).toString('HEX');
+      const filename = `${fileHash}_${file.originalname}`;
+
+      return callback(null, filename);
+    }
+  }),
 
 
 }

@@ -7,7 +7,7 @@ import JWTAuthProvider from '@modules/users/providers/AuthProvider/implementatio
 import IAuthProvider from '@modules/users/providers/AuthProvider/models/IAuthProvider'
 
 container.registerSingleton<IHashProvider>(
-  'BCryptHashProvider',
+  'HashProvider',
   BCryptHashProvider
 )
 

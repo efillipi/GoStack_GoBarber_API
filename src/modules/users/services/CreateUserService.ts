@@ -17,7 +17,7 @@ class CreateUser {
         @inject('UsersRepositorio')
         private usersRepository: IUsersRepository,
 
-        @inject('BCryptHashProvider')
+        @inject('HashProvider')
         private hashProvider : IHashProvider,
     ) { }
 
