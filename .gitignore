@@ -4,5 +4,5 @@ node_modules/
 build/
 temp/
 .env
-tmp/avatar*
-!tmp/avatar.gitkeep
+tmp/uploads*
+!tmp/uploads.gitkeep
