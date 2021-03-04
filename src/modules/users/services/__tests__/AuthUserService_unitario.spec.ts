@@ -6,14 +6,25 @@ import CreateUserService from '@modules/users/services/CreateUserService'
 
 import AppError from '@shared/errors/AppError';
 
+let fakeUserRepository : FakeUserRepository
+let fakeHashProvider : FakeHashProvider
+let fakeJWTAuthProvider : FakeJWTAuthProvider
+let authUserService : AuthUserService
+let createUserService: CreateUserService
+
 describe('AuthUserService', () => {
 
+  beforeEach(()=>{
+
+     fakeUserRepository = new FakeUserRepository();
+     fakeHashProvider = new FakeHashProvider();
+     fakeJWTAuthProvider = new FakeJWTAuthProvider();
+     authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
+     createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
+
+  })
+
   it('must be able to log in to the application', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeJWTAuthProvider = new FakeJWTAuthProvider();
-    const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
-    const createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
 
     await createUserService.execute({
       email: "user@example.com",
@@ -29,15 +40,7 @@ describe('AuthUserService', () => {
     expect(user).toHaveProperty('token')
   });
 
-
   it('should not be able to log in with invalid password', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeJWTAuthProvider = new FakeJWTAuthProvider();
-    const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
-    const createUserService = new CreateUserService(
-      fakeUserRepository, fakeHashProvider
-    );
 
     const new_user = await createUserService.execute({
       email: "user@example.com",
@@ -45,7 +48,7 @@ describe('AuthUserService', () => {
       password: "123456"
     });
 
-    expect(
+    await expect(
       authUserService.execute({
         email: new_user.email,
         password: "12345"
@@ -53,14 +56,9 @@ describe('AuthUserService', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-
   it('should not be able to log in with invalid email', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeJWTAuthProvider = new FakeJWTAuthProvider();
-    const authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
 
-    expect(
+    await expect(
       authUserService.execute({
         email: "user_invalid@example.com",
         password: "123456"

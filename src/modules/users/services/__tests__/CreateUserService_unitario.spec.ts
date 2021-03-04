@@ -3,12 +3,22 @@ import CreateUserService from '@modules/users/services/CreateUserService'
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider'
 import AppError from '@shared/errors/AppError';
 
+let fakeUserRepository: FakeUserRepository
+let fakeHashProvider: FakeHashProvider
+let createUserService: CreateUserService
+
+
 describe('CreateUser', () => {
 
+  beforeEach(() => {
+
+    fakeUserRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
+    createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
+
+  })
+
   it('should be able to create a new User', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
 
     const user = await createUserService.execute({
       email: 'user@example.com',
@@ -23,11 +33,6 @@ describe('CreateUser', () => {
   });
 
   it('should not be able to create a new user with the same email', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUserService = new CreateUserService(
-      fakeUserRepository, fakeHashProvider
-    );
 
     await createUserService.execute({
       email: 'user@example.com',
@@ -35,7 +40,7 @@ describe('CreateUser', () => {
       password: '123456'
     });
 
-    expect(
+    await expect(
       createUserService.execute({
         email: 'user@example.com',
         name: 'User Example',
@@ -45,11 +50,6 @@ describe('CreateUser', () => {
   });
 
   it('Show users', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUserService = new CreateUserService(
-      fakeUserRepository, fakeHashProvider
-    );
 
     await createUserService.execute({
       email: 'user@example.com',
@@ -61,4 +61,5 @@ describe('CreateUser', () => {
 
     expect(users.length).toBe(1)
   });
+
 });
