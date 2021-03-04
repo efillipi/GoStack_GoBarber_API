@@ -11,14 +11,14 @@ describe('CreateUser', () => {
     const createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
 
     const user = await createUserService.execute({
-      email: "user@example.com",
-      name: "User Example",
-      password: "123456"
+      email: 'user@example.com',
+      name: 'User Example',
+      password: '123456'
     });
 
     expect(user).toHaveProperty('id');
-    expect(user.email).toBe("user@example.com")
-    expect(user.name).toBe("User Example")
+    expect(user.email).toBe('user@example.com')
+    expect(user.name).toBe('User Example')
 
   });
 
@@ -30,21 +30,21 @@ describe('CreateUser', () => {
     );
 
     await createUserService.execute({
-      email: "user@example.com",
-      name: "User Example",
-      password: "123456"
+      email: 'user@example.com',
+      name: 'User Example',
+      password: '123456'
     });
 
     expect(
       createUserService.execute({
-        email: "user@example.com",
-        name: "User Example",
-        password: "123456"
+        email: 'user@example.com',
+        name: 'User Example',
+        password: '123456'
       })
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('Show appointments', async () => {
+  it('Show users', async () => {
     const fakeUserRepository = new FakeUserRepository();
     const fakeHashProvider = new FakeHashProvider();
     const createUserService = new CreateUserService(
@@ -52,9 +52,9 @@ describe('CreateUser', () => {
     );
 
     await createUserService.execute({
-      email: "user@example.com",
-      name: "User Example",
-      password: "123456"
+      email: 'user@example.com',
+      name: 'User Example',
+      password: '123456'
     });
 
     const users = await fakeUserRepository.find()
