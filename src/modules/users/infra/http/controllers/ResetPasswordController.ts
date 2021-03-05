@@ -13,12 +13,12 @@ class ResetPasswordController {
 
         const resetPasswordService = container.resolve(ResetPasswordService)
 
-        resetPasswordService.execute({
+        await resetPasswordService.execute({
           token,
           password
         })
 
-        return response.status(204).json()
+        return response.status(204).json({})
 
     }
 

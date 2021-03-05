@@ -12,7 +12,7 @@ class ForgotPasswordController {
 
     const sendForgotPasswordEmailService = container.resolve(SendForgotPasswordEmailService)
 
-    sendForgotPasswordEmailService.execute({
+    await sendForgotPasswordEmailService.execute({
       email,
     })
 
