@@ -5,40 +5,41 @@ import IHashProvider from '@modules/users/providers/HashProvider/models/IHashPro
 import { injectable, inject } from 'tsyringe'
 
 interface IRequest {
-    name: string
-    email: string;
-    password: string;
+  name: string
+  email: string;
+  password: string;
 }
+
 
 @injectable()
 class CreateUser {
 
-    constructor(
-        @inject('UsersRepositorio')
-        private usersRepository: IUsersRepository,
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
 
-        @inject('HashProvider')
-        private hashProvider : IHashProvider,
-    ) { }
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+  ) { }
 
-    public async execute({ name, email, password }: IRequest): Promise<User> {
+  public async execute({ name, email, password }: IRequest): Promise<User> {
 
-        const emailAlreadyExists = await this.usersRepository.findByEmail(email)
+    const emailAlreadyExists = await this.usersRepository.findByEmail(email)
 
-        if (emailAlreadyExists) {
-            throw new AppError('Este Email ja esta sendo utilizado', 409)
-        }
-
-        const hashPassword = await this.hashProvider.generateHash(password)
-
-        const user = await this.usersRepository.create({
-            name,
-            email,
-            password: hashPassword
-        })
-
-        return user
+    if (emailAlreadyExists) {
+      throw new AppError('Este Email ja esta sendo utilizado', 409)
     }
+
+    const hashPassword = await this.hashProvider.generateHash(password)
+
+    const user = await this.usersRepository.create({
+      name,
+      email,
+      password: hashPassword
+    })
+
+    return user
+  }
 
 }
 

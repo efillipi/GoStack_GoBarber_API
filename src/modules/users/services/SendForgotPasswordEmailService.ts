@@ -1,4 +1,3 @@
-import User from '@modules/users//infra/typeorm/entities/User'
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
@@ -12,16 +11,16 @@ interface IRequest {
 }
 
 @injectable()
-class CreateUser {
+class SendForgotPasswordEmailService {
 
   constructor(
-    @inject('UsersRepositorio')
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
     @inject('MailProvider')
     private mailProvider: IMailProvider,
 
-    @inject('UserTokenRepository')
+    @inject('UserTokensRepository')
     private userTokenRepository: IUserTokenRepository,
   ) { }
 
@@ -33,13 +32,16 @@ class CreateUser {
       throw new AppError('usuário inexistente', 404)
     }
 
-    await this.userTokenRepository.generate(emailAlreadyExists.id)
+    const { token } = await this.userTokenRepository.generate(emailAlreadyExists.id)
 
-    this.mailProvider.sendMail(email, 'nada com nada')
+    await this.mailProvider.sendMail(
+      email,
+      `Pedido de recuperação de senha recebido: ${token}`,
+    );
 
   }
 
 }
 
 
-export default CreateUser;
+export default SendForgotPasswordEmailService;

@@ -18,7 +18,7 @@ export class AlterTableAppointmentsForeignKey1614502677921 implements MigrationI
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropForeignKey(
-            "users",
+            "appointments",
             "fk_appointments_provider_id"
         );
     }

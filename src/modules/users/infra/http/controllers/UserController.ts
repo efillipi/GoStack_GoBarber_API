@@ -1,48 +1,39 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import UsersRepositorio from '@modules/users/infra/typeorm/repositories/UsersRepositorio'
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository'
 import CreateUserService from '@modules/users/services/CreateUserService'
-import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService'
-
-
 
 class UserController {
 
-    public async getall(request: Request, response: Response): Promise<Response> {
-        const usersRepositorio = new UsersRepositorio()
+  public async getall(request: Request, response: Response): Promise<Response> {
+    const usersRepository = new UsersRepository()
 
-        const users = await usersRepositorio.find()
+    const users = await usersRepository.find()
 
-        return response.status(200).json(users)
-    }
+    return response.status(200).json(users)
+  }
 
-    public async create(request: Request, response: Response): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
 
-        const {
-            name,
-            email,
-            password,
-        } = request.body;
+    const {
+      name,
+      email,
+      password,
+    } = request.body;
 
-        const createUserServices = container.resolve(CreateUserService)
+    const createUserServices = container.resolve(CreateUserService)
 
-        const user = await createUserServices.execute({
-            name,
-            email,
-            password
-        })
+    const user = await createUserServices.execute({
+      name,
+      email,
+      password
+    })
 
-        delete user.password;
+    delete user.password;
 
-        return response.status(201).json(user)
+    return response.status(201).json(user)
 
-    }
+  }
 }
-
-
-
-
-
-
 
 export default UserController;
