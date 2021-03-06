@@ -1,0 +1,17 @@
+{
+  "type": "type_db",
+  "host": "address",
+  "port": "port",
+  "username": "user_db",
+  "password": "password_user_db",
+  "database": "database_db",
+  "entities": [
+    "localy_entites/*.ts"
+  ],
+  "migrations": [
+    "localy_migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "localy_/migrations"
+  }
+}
