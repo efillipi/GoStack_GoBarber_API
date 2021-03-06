@@ -4,28 +4,24 @@ import ResetPasswordService from '@modules/users/services/ResetPasswordService'
 
 class ResetPasswordController {
 
-    public async create(request: Request, response: Response): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
 
-        const {
-            token,
-            password
-        } = request.body
+    const {
+      token,
+      password
+    } = request.body
 
-        const resetPasswordService = container.resolve(ResetPasswordService)
+    const resetPasswordService = container.resolve(ResetPasswordService)
 
-        await resetPasswordService.execute({
-          token,
-          password
-        })
+    await resetPasswordService.execute({
+      token,
+      password
+    })
 
-        return response.status(204).json({})
+    return response.status(204).json({})
 
-    }
+  }
 
 }
-
-
-
-
 
 export default ResetPasswordController;

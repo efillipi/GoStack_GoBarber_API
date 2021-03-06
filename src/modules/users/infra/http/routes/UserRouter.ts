@@ -5,8 +5,8 @@ import uploadConfig from '@config/upload'
 
 const UserRouter = Router();
 
-import UserController from '../controllers/UserController'
-import UserAvatarController from '../controllers/UserAvatarController'
+import UserController from '@modules/users/infra/http/controllers/UserController'
+import UserAvatarController from '@modules/users/infra/http/controllers/UserAvatarController'
 
 const userController = new UserController();
 const userAvatarController = new UserAvatarController();

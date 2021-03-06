@@ -10,7 +10,6 @@ interface IRequest {
   password: string;
 }
 
-
 @injectable()
 class CreateUser {
 

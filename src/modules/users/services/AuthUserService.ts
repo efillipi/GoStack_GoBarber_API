@@ -1,6 +1,6 @@
 import User from '@modules/users/infra/typeorm/entities/User'
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '../repositories/IUsersRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
 import IAuthProvider from '@modules/users/providers/AuthProvider/models/IAuthProvider'
 import { injectable, inject } from 'tsyringe'

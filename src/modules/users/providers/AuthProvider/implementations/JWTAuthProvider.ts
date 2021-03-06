@@ -1,7 +1,7 @@
 import IAuthProvider from '@modules/users/providers/AuthProvider/models/IAuthProvider'
 import authConfig from '@config/auth'
-import { sign } from 'jsonwebtoken'
 import User from '@modules/users/infra/typeorm/entities/User';
+import { sign, verify } from 'jsonwebtoken'
 
 class JWTAuthProvider implements IAuthProvider {
 
@@ -18,18 +18,17 @@ class JWTAuthProvider implements IAuthProvider {
       }
     );
 
-
-
     return token
   }
 
-  public async verify(payload: string): Promise<boolean> {
+  public async verify(token: string): Promise<string | object> {
 
+    const { secret } = authConfig.jtw
 
+    const decode = verify(token, secret)
 
-    return
+    return decode
   }
-
 
 }
 export default JWTAuthProvider

@@ -4,13 +4,13 @@ import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarSer
 import AppError from '@shared/errors/AppError';
 
 
-let fakeStorageProvider : FakeStorageProvider
-let fakeUserRepository : FakeUserRepository
-let updateUserAvatarService : UpdateUserAvatarService
+let fakeStorageProvider: FakeStorageProvider
+let fakeUserRepository: FakeUserRepository
+let updateUserAvatarService: UpdateUserAvatarService
 
 describe('UpdateUserAvatar', () => {
 
-  beforeEach(()=>{
+  beforeEach(() => {
 
     fakeStorageProvider = new FakeStorageProvider();
     fakeUserRepository = new FakeUserRepository();

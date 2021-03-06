@@ -10,8 +10,10 @@ class FakeJWTAuthProvider implements IAuthProvider {
     return token
   }
 
-  public async verify(payload: string): Promise<boolean> {
-    return true
+  public async verify(payload: string): Promise<string | object> {
+
+    const response = true
+    return { response }
   }
 
 }

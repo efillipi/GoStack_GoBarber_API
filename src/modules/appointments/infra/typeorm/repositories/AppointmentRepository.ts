@@ -3,42 +3,41 @@ import { getRepository, Repository } from 'typeorm'
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentsRepository'
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO'
 
-
 class AppointmentRepository implements IAppointmentRepository {
 
-    private ormRepository: Repository<Appointment>
+  private ormRepository: Repository<Appointment>
 
-    constructor() {
-        this.ormRepository = getRepository(Appointment)
-    }
+  constructor() {
+    this.ormRepository = getRepository(Appointment)
+  }
 
-    public async findByDate(dateAppointment: Date): Promise<Appointment | undefined> {
+  public async findByDate(dateAppointment: Date): Promise<Appointment | undefined> {
 
-        const findByDate = await this.ormRepository.findOne({
-            where: { dateAppointment }
-        })
+    const findByDate = await this.ormRepository.findOne({
+      where: { dateAppointment }
+    })
 
-        return findByDate
-    }
+    return findByDate
+  }
 
-    public async create({ provider_id, dateAppointment }: ICreateAppointmentDTO): Promise<Appointment | undefined> {
+  public async create({ provider_id, dateAppointment }: ICreateAppointmentDTO): Promise<Appointment | undefined> {
 
-        const appointment = this.ormRepository.create({
-            provider_id,
-            dateAppointment
-        })
+    const appointment = this.ormRepository.create({
+      provider_id,
+      dateAppointment
+    })
 
-        await this.ormRepository.save(appointment)
+    await this.ormRepository.save(appointment)
 
-        return appointment
-    }
+    return appointment
+  }
 
-    public async find(): Promise<Appointment[] | undefined> {
+  public async find(): Promise<Appointment[] | undefined> {
 
-        const Appointment = await this.ormRepository.find({
-        })
-        return Appointment
-    }
+    const Appointment = await this.ormRepository.find({
+    })
+    return Appointment
+  }
 }
 
 

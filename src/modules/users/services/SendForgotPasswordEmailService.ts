@@ -1,7 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
-
 import IMailProvider from '@shared/Container/providers/MailProvider/models/IMailProvider';
 
 import { injectable, inject } from 'tsyringe'

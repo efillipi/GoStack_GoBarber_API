@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { verify } from "jsonwebtoken";
 import AppError from '@shared/errors/AppError';
-import authConfig from '@config/auth'
+import JWTAuthProvider from '@modules/users/providers/AuthProvider/implementations/JWTAuthProvider'
 
 interface TokenPayload {
   iat: number;
@@ -9,10 +8,12 @@ interface TokenPayload {
   sub: string;
 }
 
-export default function ensureAuth(request: Request, response: Response, next: NextFunction): void {
+export default async function ensureAuth(request: Request, response: Response, next: NextFunction) {
 
-  const {secret} = authConfig.jtw
   const authHeader = request.headers.authorization;
+
+  const jtwAuthProvider = new JWTAuthProvider()
+
 
   if (!authHeader) {
     throw new AppError('Falha na Autenticação, JTW token is missing', 401)
@@ -22,7 +23,7 @@ export default function ensureAuth(request: Request, response: Response, next: N
 
   try {
 
-    const decode = verify(token, secret)
+    const decode = await jtwAuthProvider.verify(token)
 
     const { sub } = decode as TokenPayload
 

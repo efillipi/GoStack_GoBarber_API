@@ -1,28 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn, UpdateDateColumn, OneToMany,JoinColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from 'typeorm'
 
 @Entity('users')
 class User {
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    email: string;
+  @Column()
+  email: string;
 
-    @Column()
-    password: string;
+  @Column()
+  password: string;
 
-    @Column()
-    avatar: string;
+  @Column()
+  avatar: string;
 
-    @CreateDateColumn()
-    created_at : Date
+  @CreateDateColumn()
+  created_at: Date
 
-    @UpdateDateColumn()
-    update_at: Date
+  @UpdateDateColumn()
+  update_at: Date
 
 }
 

@@ -1,4 +1,3 @@
-
 import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository'
 import { v1 as uuid } from 'uuid'
@@ -15,8 +14,8 @@ class FakeUserTokenRepository implements IUserTokenRepository {
       id: uuid(),
       token: uuid(),
       user_id,
-      created_at : new Date(),
-      update_at : new Date()
+      created_at: new Date(),
+      update_at: new Date()
 
     })
 
@@ -25,11 +24,11 @@ class FakeUserTokenRepository implements IUserTokenRepository {
     return userToken
   }
 
-  public async findByToken(token : string): Promise<UserToken | undefined> {
+  public async findByToken(token: string): Promise<UserToken | undefined> {
 
     const userToken = this.userToken.find(
       userToken => userToken.token === token
-  )
+    )
 
     return userToken
   }

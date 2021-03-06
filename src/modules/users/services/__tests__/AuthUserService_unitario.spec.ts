@@ -6,21 +6,21 @@ import CreateUserService from '@modules/users/services/CreateUserService'
 
 import AppError from '@shared/errors/AppError';
 
-let fakeUserRepository : FakeUserRepository
-let fakeHashProvider : FakeHashProvider
-let fakeJWTAuthProvider : FakeJWTAuthProvider
-let authUserService : AuthUserService
+let fakeUserRepository: FakeUserRepository
+let fakeHashProvider: FakeHashProvider
+let fakeJWTAuthProvider: FakeJWTAuthProvider
+let authUserService: AuthUserService
 let createUserService: CreateUserService
 
 describe('AuthUserService', () => {
 
-  beforeEach(()=>{
+  beforeEach(() => {
 
-     fakeUserRepository = new FakeUserRepository();
-     fakeHashProvider = new FakeHashProvider();
-     fakeJWTAuthProvider = new FakeJWTAuthProvider();
-     authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
-     createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
+    fakeUserRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
+    fakeJWTAuthProvider = new FakeJWTAuthProvider();
+    authUserService = new AuthUserService(fakeUserRepository, fakeHashProvider, fakeJWTAuthProvider);
+    createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
 
   })
 

@@ -5,50 +5,50 @@ import { v1 as uuid } from 'uuid'
 
 class FakeUserRepository implements IUsersRepository {
 
-    private Users: User[] = [];
+  private Users: User[] = [];
 
-    public async findByEmail(email:string): Promise<User | undefined> {
-        const findByEmail = this.Users.find(
-            user => user.email === email
-        )
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const findByEmail = this.Users.find(
+      user => user.email === email
+    )
 
-        return findByEmail
-    }
+    return findByEmail
+  }
 
-    public async findById(id: string): Promise<User | undefined> {
-        const findById = this.Users.find(
-            user => user.id === id
-        )
+  public async findById(id: string): Promise<User | undefined> {
+    const findById = this.Users.find(
+      user => user.id === id
+    )
 
-        return findById
-    }
+    return findById
+  }
 
-    public async save(user: User): Promise<User> {
+  public async save(user: User): Promise<User> {
 
-        const FindIndex = this.Users.findIndex( findUser => findUser.id === user.id)
+    const FindIndex = this.Users.findIndex(findUser => findUser.id === user.id)
 
-        this.Users[FindIndex] = user;
+    this.Users[FindIndex] = user;
 
-        return user
-    }
+    return user
+  }
 
 
-    public async create({ name,email,password }: ICreateUserDTO): Promise<User | undefined> {
+  public async create({ name, email, password }: ICreateUserDTO): Promise<User | undefined> {
 
-        const user = new User()
+    const user = new User()
 
-        Object.assign(user, { id: uuid(), name,email,password })
+    Object.assign(user, { id: uuid(), name, email, password })
 
-        this.Users.push(user)
+    this.Users.push(user)
 
-        return user
+    return user
 
-    }
+  }
 
-    public async find(): Promise<User[] | undefined> {
+  public async find(): Promise<User[] | undefined> {
 
-        return this.Users
-    }
+    return this.Users
+  }
 }
 
 export default FakeUserRepository
