@@ -1,5 +1,5 @@
 export default interface IMailTemplateProviderDTO{
-    template : string;
+    file : string;
     variables: IVariables;
 }
 

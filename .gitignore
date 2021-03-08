@@ -4,6 +4,6 @@ node_modules/
 build/
 temp/
 .env
-ormconfig.json
+.ormconfig.json
 tmp/uploads*
 !tmp/uploads.gitkeep
