@@ -48,10 +48,10 @@ class UsersRepository implements IUsersRepository {
 
     return user
   }
+
   public async find(): Promise<User[] | undefined> {
 
-    const users = await this.ormRepository.find({
-    })
+    const users = await this.ormRepository.find()
     return users
   }
 
