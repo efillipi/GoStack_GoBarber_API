@@ -32,13 +32,13 @@ class ProfileController {
 
     const showProfileService = container.resolve(ShowProfileService)
 
-    const profile_update = await showProfileService.execute({
+    const userShow = await showProfileService.execute({
       user_id: id,
     })
 
-    delete profile_update.password
+    delete userShow.password
 
-    return response.status(200).json(profile_update)
+    return response.status(200).json(userShow)
 
   }
 }
