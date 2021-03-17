@@ -1,10 +1,11 @@
 .idea/
 .vscode/
-node_modules/
-coverage/
-build/
-temp/
+/node_modules/
+/coverage/
+/build/
 .env
 .ormconfig.json
-tmp/uploads*
-!tmp/uploads.gitkeep
+tmp/uploads/*
+!tmp/uploads/.gitkeep
+private-key.pem
+public-key.pem
