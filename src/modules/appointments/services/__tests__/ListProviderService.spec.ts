@@ -30,24 +30,35 @@ describe('CreateAppointment', () => {
 
   it('should be able to find all t', async () => {
 
-    const user = await createUserService.execute({
-      email: 'user@example.com',
+    const user1 = await createUserService.execute({
+      email: 'use1r@example.com',
       name: 'User Example',
       password: '123456'
     });
 
-    const appointment = await createAppointmentService.execute({
-      dateAppointment: new Date(),
-      provider_id: user.id,
+    const user2 = await createUserService.execute({
+      email: 'user2@example.com',
+      name: 'User Example',
+      password: '123456'
     });
 
+    const user3 = await createUserService.execute({
+      email: 'user3@example.com',
+      name: 'User Example',
+      password: '123456'
+    });
+
+
     const listProvider = await listProviderService.execute({
-      user_id: user.id
+      user_id: user3.id
     })
 
 
-    expect(appointment).toHaveProperty('id');
-    expect(appointment.provider_id).toBe(user.id);
+
+    expect(listProvider).toEqual([
+      user1,
+      user2
+    ]);
   });
 
 
