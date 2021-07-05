@@ -1,7 +1,7 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUserToken1614948675588 implements MigrationInterface {
-
+export default class CreateUserToken1614948675588
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -25,25 +25,21 @@ export class CreateUserToken1614948675588 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()'
+            default: 'now()',
           },
           {
             name: 'update_at',
             type: 'timestamp',
-            default: 'now()'
-          }
+            default: 'now()',
+          },
         ],
-      })
+      }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey(
-      "user_token",
-      "fk_user_token_user_id"
-    );
+    await queryRunner.dropForeignKey('user_token', 'fk_user_token_user_id');
 
-    await queryRunner.dropTable('user_token')
+    await queryRunner.dropTable('user_token');
   }
-
 }

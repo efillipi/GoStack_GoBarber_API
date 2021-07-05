@@ -1,14 +1,11 @@
-import IMailTemplateProvider from '@shared/Container/providers/MailTemplateProvider/models/IMailTemplateProvider'
+import IMailTemplateProvider from '@shared/Container/providers/MailTemplateProvider/models/IMailTemplateProvider';
 
 class FakeMailProvider implements IMailTemplateProvider {
-
-  constructor() {
-  }
+  constructor() {}
 
   public async parse(): Promise<string> {
-    return 'Mail Content'
+    return 'Mail Content';
   }
 }
 
-export default FakeMailProvider
-
+export default FakeMailProvider;

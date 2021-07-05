@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
-import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
-import { isAfter, addHours, differenceInHours } from 'date-fns'
-import { injectable, inject } from 'tsyringe'
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import { isAfter, addHours, differenceInHours } from 'date-fns';
+import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
   token: string;
@@ -12,7 +12,6 @@ interface IRequest {
 
 @injectable()
 class ResetPasswordService {
-
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -22,35 +21,32 @@ class ResetPasswordService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) { }
+  ) {}
 
   public async execute({ token, password }: IRequest): Promise<void> {
-
-    const userToken = await this.userTokenRepository.findByToken(token)
+    const userToken = await this.userTokenRepository.findByToken(token);
 
     if (!userToken) {
-      throw new AppError('token do usuário invalido')
+      throw new AppError('token do usuário invalido');
     }
 
-    const user = await this.usersRepository.findById(userToken.user_id)
+    const user = await this.usersRepository.findById(userToken.user_id);
 
     if (!user) {
-      throw new AppError('usuário invalido')
+      throw new AppError('usuário invalido');
     }
 
-    const tokenCreated_at = userToken.created_at
-    const compareDate = addHours(tokenCreated_at, 2)
+    const tokenCreated_at = userToken.created_at;
+    const compareDate = addHours(tokenCreated_at, 2);
 
     if (isAfter(Date.now(), compareDate)) {
-      throw new AppError('token expirado')
+      throw new AppError('token expirado');
     }
 
-    user.password = await this.hashProvider.generateHash(password)
+    user.password = await this.hashProvider.generateHash(password);
 
-    await this.usersRepository.save(user)
+    await this.usersRepository.save(user);
   }
-
 }
-
 
 export default ResetPasswordService;

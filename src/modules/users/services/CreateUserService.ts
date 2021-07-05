@@ -1,46 +1,42 @@
-import User from '@modules/users//infra/typeorm/entities/User'
+import User from '@modules/users//infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
-import { injectable, inject } from 'tsyringe'
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
-  name: string
+  name: string;
   email: string;
   password: string;
 }
 
 @injectable()
 class CreateUser {
-
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) { }
+  ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
-
-    const emailAlreadyExists = await this.usersRepository.findByEmail(email)
+    const emailAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (emailAlreadyExists) {
-      throw new AppError('Este Email ja esta sendo utilizado', 409)
+      throw new AppError('Este Email ja esta sendo utilizado', 409);
     }
 
-    const hashPassword = await this.hashProvider.generateHash(password)
+    const hashPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,
       email,
-      password: hashPassword
-    })
+      password: hashPassword,
+    });
 
-    return user
+    return user;
   }
-
 }
-
 
 export default CreateUser;
