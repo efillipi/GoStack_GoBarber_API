@@ -2,7 +2,7 @@ import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
-import { isAfter, addHours, differenceInHours } from 'date-fns';
+import { isAfter, addHours } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {

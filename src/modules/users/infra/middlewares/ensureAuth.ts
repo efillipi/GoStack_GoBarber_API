@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import AppError from '@shared/errors/AppError';
 import JWTAuthProvider from '@modules/users/providers/AuthProvider/implementations/JWTAuthProvider';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -10,9 +10,9 @@ interface TokenPayload {
 
 export default async function ensureAuth(
   request: Request,
-  response: Response,
+  _response: Response,
   next: NextFunction,
-) {
+): Promise<void> {
   const authHeader = request.headers.authorization;
 
   const jtwAuthProvider = new JWTAuthProvider();
@@ -26,7 +26,7 @@ export default async function ensureAuth(
   try {
     const decode = await jtwAuthProvider.verify(token);
 
-    const { sub } = decode as TokenPayload;
+    const { sub } = decode as ITokenPayload;
 
     request.user = {
       id: sub,

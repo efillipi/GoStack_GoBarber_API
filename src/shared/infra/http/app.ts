@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'reflect-metadata';
 import '@shared/infra/typeorm';
 import '@shared/Container';
@@ -16,7 +17,7 @@ app.use(routes);
 app.use('/files', express.static(uploadConfig.uploadsFolder));
 
 app.use(
-  (err: Error, request: Request, response: Response, next: NextFunction) => {
+  (err: Error, request: Request, response: Response, _next: NextFunction) => {
     if (err instanceof AppError) {
       return response.status(err.statusCode).json({
         status: 'Error',

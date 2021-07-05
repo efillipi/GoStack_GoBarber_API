@@ -24,7 +24,7 @@ describe('UpdateUserAvatar', () => {
       password: '123456',
     });
 
-    const update_avatar = await updateUserAvatarService.execute({
+    await updateUserAvatarService.execute({
       avatarFilename: '2c1a59621e68189ed125_maktub1.png',
       user_id: user.id,
     });
@@ -50,7 +50,7 @@ describe('UpdateUserAvatar', () => {
       password: '123456',
     });
 
-    const update_avatar = await updateUserAvatarService.execute({
+    await updateUserAvatarService.execute({
       avatarFilename: '2c1a59621e68189ed125_maktub1.png',
       user_id: user.id,
     });

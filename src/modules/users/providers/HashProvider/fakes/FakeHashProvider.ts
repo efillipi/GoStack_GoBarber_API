@@ -6,7 +6,7 @@ class FakeHashProvider implements IHashProvider {
   }
 
   public async comparreHash(payload: string, hashed: string): Promise<boolean> {
-    const hashPassword = payload == hashed;
+    const hashPassword = payload === hashed;
 
     return hashPassword;
   }

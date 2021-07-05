@@ -1,14 +1,11 @@
-import FakeAppointmentsRepository from '@modules/appointments/repositories/Fakes/FakeAppointmentRepository';
 import FakeUserRepository from '@modules/users/repositories/Fakes/FakeUserRepository';
-import CreateAppointmentService from '@modules/appointments/services/NewAppointmentService';
 import ListProviderService from '@modules/appointments/services/ListProviderService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
 let fakeHashProvider: FakeHashProvider;
 let createUserService: CreateUserService;
-let fakeAppointmentsRepository: FakeAppointmentsRepository;
-let createAppointmentService: CreateAppointmentService;
+
 let listProviderService: ListProviderService;
 let fakeUserRepository: FakeUserRepository;
 
@@ -21,10 +18,6 @@ describe('CreateAppointment', () => {
       fakeHashProvider,
     );
 
-    fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    createAppointmentService = new CreateAppointmentService(
-      fakeAppointmentsRepository,
-    );
     listProviderService = new ListProviderService(fakeUserRepository);
   });
 

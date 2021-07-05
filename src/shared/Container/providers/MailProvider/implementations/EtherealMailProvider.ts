@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import nodemailer, { Transporter } from 'nodemailer';
 import IMailProvider from '@shared/Container/providers/MailProvider/models/IMailProvider';
 import ISenMailDTO from '@shared/Container/providers/MailProvider/dtos/ISenMailDTO';

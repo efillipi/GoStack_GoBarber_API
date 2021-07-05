@@ -63,12 +63,6 @@ describe('UpdateProfileService.spec', () => {
   });
 
   it('should not be able to change information for a non-existent user', async () => {
-    const user = await createUserService.execute({
-      email: 'user@example.com',
-      name: 'User Example',
-      password: '123456',
-    });
-
     await expect(
       updateProfileService.execute({
         user_id: 'user.ia121412412',

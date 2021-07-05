@@ -14,10 +14,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "settings": {
     "import/resolver": {
       "typescript": {}
@@ -28,6 +25,11 @@
     "class-methods-use-this": "off",
     "camelcase": "off",
     "no-useless-constructor": "off",
+    "no-param-reassign": "off",
+    "import/no-extraneous-dependencies":"off",
+    "import/prefer-default-export":"off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function":"off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -38,9 +40,7 @@
       "error",
       {
         "selector": "interface",
-        "format": [
-          "PascalCase"
-        ],
+        "format": ["PascalCase"],
         "custom": {
           "regex": "^I[A-Z]",
           "match": true

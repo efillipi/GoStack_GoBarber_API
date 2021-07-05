@@ -15,9 +15,7 @@ class JWTAuthProvider implements IAuthProvider {
     return token;
   }
 
-  public async verify(token: string): Promise<string | object> {
-    const { secret } = authConfig.jtw;
-
+  public async verify(token: string) {
     const decode = verify(token, secret);
 
     return decode;
