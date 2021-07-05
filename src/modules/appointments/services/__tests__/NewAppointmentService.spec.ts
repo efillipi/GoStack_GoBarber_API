@@ -1,24 +1,12 @@
+import AppError from '@shared/errors/AppError';
 import FakeAppointmentsRepository from '@modules/appointments/repositories/Fakes/FakeAppointmentRepository';
-import FakeUserRepository from '@modules/users/repositories/Fakes/FakeUserRepository';
 import CreateAppointmentService from '@modules/appointments/services/NewAppointmentService';
-import CreateUserService from '@modules/users/services/CreateUserService';
-import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
-let fakeHashProvider: FakeHashProvider;
-let createUserService: CreateUserService;
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let createAppointmentService: CreateAppointmentService;
-let fakeUserRepository: FakeUserRepository;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
-    fakeUserRepository = new FakeUserRepository();
-    fakeHashProvider = new FakeHashProvider();
-    createUserService = new CreateUserService(
-      fakeUserRepository,
-      fakeHashProvider,
-    );
-
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
     createAppointmentService = new CreateAppointmentService(
       fakeAppointmentsRepository,
@@ -26,19 +14,87 @@ describe('CreateAppointment', () => {
   });
 
   it('should be able to create a new appointment', async () => {
-    const user = await createUserService.execute({
-      email: 'user@example.com',
-      name: 'User Example',
-      password: '123456',
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2021, 6, 5, 10).getTime();
     });
 
     const appointment = await createAppointmentService.execute({
-      dateAppointment: new Date(),
-      user_id: user.id,
-      provider_id: user.id,
+      dateAppointment: new Date(2021, 6, 5, 12),
+      user_id: 'user-id',
+      provider_id: 'provider-id',
     });
 
     expect(appointment).toHaveProperty('id');
-    expect(appointment.provider_id).toBe(user.id);
+    expect(appointment.provider_id).toBe('provider-id');
+  });
+
+  it('should not be able to create two appointments on the same time', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2021, 6, 5, 10).getTime();
+    });
+
+    await createAppointmentService.execute({
+      dateAppointment: new Date(2021, 6, 5, 12),
+      user_id: 'user-id',
+      provider_id: 'provider-id',
+    });
+
+    await expect(
+      createAppointmentService.execute({
+        dateAppointment: new Date(2021, 6, 5, 12),
+        user_id: 'user-id',
+        provider_id: 'provider-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create two appointments on past date', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2021, 6, 5, 10).getTime();
+    });
+
+    await expect(
+      createAppointmentService.execute({
+        dateAppointment: new Date(2021, 6, 5, 9),
+        user_id: 'user-id',
+        provider_id: 'provider-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create an appointment with same user as provider', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2021, 6, 5, 12).getTime();
+    });
+
+    await expect(
+      createAppointmentService.execute({
+        dateAppointment: new Date(2021, 6, 5, 13),
+        user_id: 'user-id',
+        provider_id: 'user-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create an appointment before 8am and after 5pm', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2021, 6, 5, 12).getTime();
+    });
+
+    await expect(
+      createAppointmentService.execute({
+        dateAppointment: new Date(2021, 6, 6, 7),
+        user_id: 'user-id',
+        provider_id: 'provider-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+
+    await expect(
+      createAppointmentService.execute({
+        dateAppointment: new Date(2021, 6, 6, 18),
+        user_id: 'user-id',
+        provider_id: 'provider-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { startOfHour, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository';
 import NewAppointmentService from '@modules/appointments/services/NewAppointmentService';
 import { container } from 'tsyringe';
@@ -19,7 +19,7 @@ class AppointmentController {
     const { provider_id, dateAppointment } = request.body;
     const user_id = request.user.id;
 
-    const parseData = startOfHour(parseISO(dateAppointment));
+    const parseData = parseISO(dateAppointment);
 
     const appointment = await newAppointmentServices.execute({
       provider_id,
