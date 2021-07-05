@@ -41,50 +41,60 @@ describe('ListProviderMonthAvailability', () => {
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 8, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 9, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 10, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 11, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 12, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 13, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 14, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 15, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 16, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 23, 17, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     const listProviderMonthAvailability = await listProviderMonthAvailabilityService.execute(

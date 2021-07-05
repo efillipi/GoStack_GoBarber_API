@@ -17,11 +17,13 @@ class AppointmentController {
     const newAppointmentServices = container.resolve(NewAppointmentService);
 
     const { provider_id, dateAppointment } = request.body;
+    const user_id = request.user.id;
 
     const parseData = startOfHour(parseISO(dateAppointment));
 
     const appointment = await newAppointmentServices.execute({
       provider_id,
+      user_id,
       dateAppointment: parseData,
     });
 

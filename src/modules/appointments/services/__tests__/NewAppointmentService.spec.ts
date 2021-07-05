@@ -34,6 +34,7 @@ describe('CreateAppointment', () => {
 
     const appointment = await createAppointmentService.execute({
       dateAppointment: new Date(),
+      user_id: user.id,
       provider_id: user.id,
     });
 

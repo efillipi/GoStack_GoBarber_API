@@ -41,11 +41,13 @@ describe('ListProviderMonthAvailability', () => {
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 19, 14, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     await createAppointmentService.execute({
       dateAppointment: new Date(2021, 4, 19, 15, 0, 0),
       provider_id: user.id,
+      user_id: user.id,
     });
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {

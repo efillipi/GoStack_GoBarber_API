@@ -3,10 +3,10 @@ import authConfig from '@config/auth';
 import User from '@modules/users/infra/typeorm/entities/User';
 import { sign, verify } from 'jsonwebtoken';
 
+const { secret, expiresIn } = authConfig.jtw;
+
 class JWTAuthProvider implements IAuthProvider {
   public async sing(user: User): Promise<string> {
-    const { secret, expiresIn } = authConfig.jtw;
-
     const token = sign({}, secret, {
       subject: user.id,
       expiresIn,
