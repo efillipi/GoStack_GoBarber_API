@@ -1,3 +1,4 @@
-import { createConnection } from 'typeorm';
+/* eslint-disable no-console */
+import { createConnections } from 'typeorm';
 
-createConnection();
+createConnections().then(() => console.log(' 🗄 Conexão com DB estabelecida'));
