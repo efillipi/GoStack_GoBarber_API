@@ -1,8 +1,10 @@
 import { container } from 'tsyringe';
 import mailConfig from '@config/mail';
+import uploadConfig from '@config/upload';
 
 import IStorageProvider from '@shared/Container/providers/StorageProvider/models/IStorageProvider';
 import DiskStorageProvider from '@shared/Container/providers/StorageProvider/implementations/DiskStorageProvider';
+import S3StorageProvider from '@shared/Container/providers/StorageProvider/implementations/S3StorageProvider';
 
 import IMailProvider from '@shared/Container/providers/MailProvider/models/IMailProvider';
 import EtherealMailProvider from '@shared/Container/providers/MailProvider/implementations/EtherealMailProvider';
@@ -11,9 +13,14 @@ import SESMailProvider from '@shared/Container/providers/MailProvider/implementa
 import IMailTemplateProvider from '@shared/Container/providers/MailTemplateProvider/models/IMailTemplateProvider';
 import HandlebarsMailTemplateProvider from '@shared/Container/providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
 
+const disk_providers = {
+  disk: DiskStorageProvider,
+  s3: S3StorageProvider,
+};
+
 container.registerSingleton<IStorageProvider>(
   'StorageProvider',
-  DiskStorageProvider,
+  disk_providers[uploadConfig.driver],
 );
 
 container.registerSingleton<IMailTemplateProvider>(
