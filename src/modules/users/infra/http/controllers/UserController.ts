@@ -10,7 +10,7 @@ class UserController {
 
     const users = await showUsersService.execute();
 
-    return response.status(200).json(users);
+    return response.json(classToClass(users));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
