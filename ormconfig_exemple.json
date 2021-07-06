@@ -1,12 +1,11 @@
-
 [
   {
-    "name":"default",
+    "name": "default",
     "type": "mysql",
     "host": "localhost",
-    "port": 3306,
-    "username": "root",
-    "password": "H@rd/sc$",
+    "port": 5432,
+    "username": "postgres",
+    "password": "docker",
     "database": "gostack_gobarber",
     "entities": [
       "./src/modules/**/infra/typeorm/entities/*.ts"
