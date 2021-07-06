@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import ShowUsersService from '@modules/users/services/ShowUsersService';
+import { classToClass } from 'class-transformer';
 
 class UserController {
   public async show(request: Request, response: Response): Promise<Response> {
@@ -25,7 +26,7 @@ class UserController {
 
     delete user.password;
 
-    return response.status(201).json(user);
+    return response.json(classToClass(user));
   }
 }
 

@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import '@shared/infra/typeorm';
 import '@shared/Container';
 import 'express-async-errors';
+import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import { errors } from 'celebrate';
 import routes from '@shared/infra/http/routes/index';
@@ -19,7 +20,7 @@ app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(errors());
 
 app.use(
-  (err: Error, request: Request, response: Response, _next: NextFunction) => {
+  (err: Error, _request: Request, response: Response, _next: NextFunction) => {
     if (err instanceof AppError) {
       return response.status(err.statusCode).json({
         status: 'Error',
