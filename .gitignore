@@ -4,7 +4,7 @@
 /coverage/
 /build/
 .env
-.ormconfig.json
+.ormconfig.js
 tmp/uploads/*
 !tmp/uploads/.gitkeep
 private-key.pem
