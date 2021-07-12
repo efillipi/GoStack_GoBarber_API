@@ -2,23 +2,30 @@ import FakeUserRepository from '@modules/users/repositories/Fakes/FakeUserReposi
 import ListProviderService from '@modules/appointments/services/ListProviderService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import FakeCacheProvider from '@shared/Container/providers/CacheProvider/fakes/FakeCacheProvider';
 
 let fakeHashProvider: FakeHashProvider;
 let createUserService: CreateUserService;
 
 let listProviderService: ListProviderService;
 let fakeUserRepository: FakeUserRepository;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
+    fakeCacheProvider = new FakeCacheProvider();
     createUserService = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
+      fakeCacheProvider,
     );
 
-    listProviderService = new ListProviderService(fakeUserRepository);
+    listProviderService = new ListProviderService(
+      fakeUserRepository,
+      fakeCacheProvider,
+    );
   });
 
   it('should be able to find all t', async () => {

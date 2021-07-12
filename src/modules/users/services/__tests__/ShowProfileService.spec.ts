@@ -2,12 +2,13 @@ import FakeUserRepository from '@modules/users/repositories/Fakes/FakeUserReposi
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
+import FakeCacheProvider from '@shared/Container/providers/CacheProvider/fakes/FakeCacheProvider';
 
 import AppError from '@shared/errors/AppError';
 
 let fakeUserRepository: FakeUserRepository;
 let fakeHashProvider: FakeHashProvider;
-
+let fakeCacheProvider: FakeCacheProvider;
 let createUserService: CreateUserService;
 let showProfileService: ShowProfileService;
 
@@ -15,10 +16,12 @@ describe('ShowProfileService', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
+    fakeCacheProvider = new FakeCacheProvider();
 
     createUserService = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
+      fakeCacheProvider,
     );
     showProfileService = new ShowProfileService(fakeUserRepository);
   });

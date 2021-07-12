@@ -3,8 +3,11 @@ import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHa
 import FakeJWTAuthProvider from '@modules/users/providers/AuthProvider/fakes/FakeJWTAuthProvider';
 import AuthUserService from '@modules/users/services/AuthUserService';
 import CreateUserService from '@modules/users/services/CreateUserService';
+import FakeCacheProvider from '@shared/Container/providers/CacheProvider/fakes/FakeCacheProvider';
 
 import AppError from '@shared/errors/AppError';
+
+let fakeCacheProvider: FakeCacheProvider;
 
 let fakeUserRepository: FakeUserRepository;
 let fakeHashProvider: FakeHashProvider;
@@ -17,6 +20,8 @@ describe('AuthUserService', () => {
     fakeUserRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
     fakeJWTAuthProvider = new FakeJWTAuthProvider();
+    fakeCacheProvider = new FakeCacheProvider();
+
     authUserService = new AuthUserService(
       fakeUserRepository,
       fakeHashProvider,
@@ -25,6 +30,7 @@ describe('AuthUserService', () => {
     createUserService = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
+      fakeCacheProvider,
     );
   });
 

@@ -3,6 +3,9 @@ import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import AppError from '@shared/errors/AppError';
+import FakeCacheProvider from '@shared/Container/providers/CacheProvider/fakes/FakeCacheProvider';
+
+let fakeCacheProvider: FakeCacheProvider;
 
 let fakeUserRepository: FakeUserRepository;
 let fakeHashProvider: FakeHashProvider;
@@ -13,6 +16,8 @@ describe('UpdateProfileService.spec', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
+    fakeCacheProvider = new FakeCacheProvider();
+
     updateProfileService = new UpdateProfileService(
       fakeUserRepository,
       fakeHashProvider,
@@ -20,6 +25,7 @@ describe('UpdateProfileService.spec', () => {
     createUserService = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
+      fakeCacheProvider,
     );
   });
 
