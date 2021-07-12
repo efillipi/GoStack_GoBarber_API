@@ -13,7 +13,6 @@ module.exports = [
       migrationsDir: process.env.TYPEORM_CLI,
     },
   },
-
   {
     name: 'mongo',
     type: 'mongodb',
