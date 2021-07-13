@@ -1,7 +1,9 @@
 .idea/
 .vscode/
+.vs/
 /node_modules/
 /coverage/
+/dist
 /build/
 .env
 tmp/uploads/*
