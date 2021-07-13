@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "start": "ts-node src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "dev:server": "NODE_ENV=dev APP_PORT=3333 ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "start": "node dist/shared/infra/http/server.js",
+    "typeorm": "NODE_ENV=dev ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest --setupFiles dotenv/config"
   },
   "dependencies": {
