@@ -12,7 +12,7 @@ export default class AlterTableAppointmentsAddCampoIdUser1625496069790
       'appointments',
       new TableColumn({
         name: 'user_id',
-        type: 'varchar',
+        type: 'uuid',
         isNullable: true,
       }),
     );
