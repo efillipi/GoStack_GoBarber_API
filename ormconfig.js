@@ -1,6 +1,6 @@
 module.exports = [
   {
-    name: 'default',
+    name: process.env.DB_NAME,
     type: process.env.DB_CLIENT,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -14,12 +14,12 @@ module.exports = [
     },
   },
   {
-    name: 'mongo',
-    type: 'mongodb',
-    host: 'localhost',
-    port: 27017,
-    database: 'gobarber',
-    useUnifiedTopology: true,
-    entities: ['./src/modules/**/infra/typeorm/schemas/*.ts'],
+    name: process.env.MONGO_DB_NAME,
+    type: process.env.MONGO_DB_CLIENT,
+    host: process.env.MONGO_DB_HOST,
+    port: process.env.MONGO_DB_PORT,
+    database: process.env.MONGO_DB_DATABASE,
+    useUnifiedTopology: process.env.MONGO_DB_USE_UNIFIED_TOPOLOGY,
+    entities: [process.env.MONGO_TYPEORM_ENTITIES],
   },
 ];
