@@ -1,0 +1,91 @@
+name: CI
+
+on:
+
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    
+      - uses: actions/checkout@v2
+
+      #instalar node
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.2.0
+        with:
+            node-version: 12.x
+            
+      #cache do yarn
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+        
+        
+      #instalar dependencies
+      - name : install dependencies
+        run: yarn
+        
+      #Build
+      - name : Run Build
+        run: yarn build
+      
+      #copiar arquivos sem node_modules
+      - name: copy dist to ....
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: ".,!node_modules"
+          target: "~/app/GoStack_GoBarber"
+          
+      #yarn no server
+      - name: executar yarn
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: cd ~/app/GoStack_GoBarber && yarn
+            
+      #run migrations no server
+      - name: run migrations no server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: cd ~/app/GoStack_GoBarber && yarn typeorm migration:run
+            
+      #run migrations no server
+      - name: executar yarn
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: pm2 restart gobarber-api
+            
+            
+
+      
