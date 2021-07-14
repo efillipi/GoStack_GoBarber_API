@@ -36,7 +36,7 @@ class ListProviderDayAvailabilityService {
       },
     );
 
-    const hourStart = 8; // tornar uma constante
+    const hourStart = 8;
 
     const eachHourArray = Array.from(
       { length: 10 },
