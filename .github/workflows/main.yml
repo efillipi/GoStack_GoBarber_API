@@ -56,7 +56,7 @@ jobs:
           source: ".,!node_modules"
           target: "~/app/GoStack_GoBarber"
           
-      #yarn no server
+      #yarn no server || typeorm:run || restart
       - name: executar yarn
         uses: appleboy/ssh-action@master
         with:
@@ -64,28 +64,13 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script: cd ~/app/GoStack_GoBarber && yarn
+          script: |
+            cd ~/app/GoStack_GoBarber
+            yarn
+            yarn typeorm migration:run
+            pm2 restart gobarber-api
             
-      #run migrations no server
-      - name: run migrations no server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: cd ~/app/GoStack_GoBarber && yarn typeorm migration:run
-            
-      #run migrations no server
-      - name: executar yarn
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: pm2 restart gobarber-api
-            
+          
             
 
       
