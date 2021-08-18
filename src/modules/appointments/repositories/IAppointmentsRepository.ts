@@ -4,7 +4,10 @@ import IFindallinMonthFromProviderDTO from '@modules/appointments/dtos/IFindalli
 import IFindallinDayFromProviderDTO from '@modules/appointments/dtos/IFindallinDayFromProviderDTO';
 
 export default interface IAppointmentRepository {
-  findByDate(dateAppointment: Date): Promise<Appointment | undefined>;
+  findByDate(
+    dateAppointment: Date,
+    provider_id: string,
+  ): Promise<Appointment | undefined>;
   findallinMonthFromProvider(
     data: IFindallinMonthFromProviderDTO,
   ): Promise<Appointment[] | undefined>;
