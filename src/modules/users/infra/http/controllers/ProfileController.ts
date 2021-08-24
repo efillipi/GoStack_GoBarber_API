@@ -31,8 +31,6 @@ class ProfileController {
       user_id: id,
     });
 
-    delete userShow.password;
-
     return response.json(classToClass(userShow));
   }
 }

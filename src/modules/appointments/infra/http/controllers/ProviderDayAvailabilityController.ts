@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ListProviderDayAvailabilityService from '@modules/appointments/services/ListProviderDayAvailabilityService';
 
@@ -19,6 +20,6 @@ export default class ProviderDayAvailabilityController {
       year: Number(year),
     });
 
-    return response.json(availability);
+    return response.json(classToClass(availability));
   }
 }

@@ -44,8 +44,6 @@ class AuthUserService {
       throw new AppError('Falha na Autenticação', 401);
     }
 
-    delete user.password;
-
     const token = await this.authProvider.sing(user);
 
     return {
