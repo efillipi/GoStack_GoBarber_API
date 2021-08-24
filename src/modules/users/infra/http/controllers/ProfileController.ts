@@ -19,8 +19,6 @@ class ProfileController {
       old_password,
     });
 
-    delete profile_update.password;
-
     return response.json(classToClass(profile_update));
   }
 
