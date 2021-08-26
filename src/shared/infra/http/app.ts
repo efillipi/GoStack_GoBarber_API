@@ -19,6 +19,7 @@ app.use(rateLimiter);
 app.use(routes);
 
 app.use('/files', express.static(uploadConfig.uploadsFolder));
+app.use('/tmp', express.static(uploadConfig.tmpFolder));
 app.use(errors());
 
 app.use(
