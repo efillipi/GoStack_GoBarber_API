@@ -14,7 +14,7 @@ class UserController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password } = request.body;
+    const { name, email, password, role } = request.body;
 
     const createUserServices = container.resolve(CreateUserService);
 
@@ -22,6 +22,7 @@ class UserController {
       name,
       email,
       password,
+      role,
     });
 
     return response.json(classToClass(user));

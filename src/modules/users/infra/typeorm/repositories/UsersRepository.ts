@@ -15,11 +15,13 @@ class UsersRepository implements IUsersRepository {
     name,
     email,
     password,
+    role,
   }: ICreateUserDTO): Promise<User | undefined> {
     const user = this.ormRepository.create({
       name,
       email,
       password,
+      role,
     });
 
     await this.ormRepository.save(user);
@@ -63,10 +65,15 @@ class UsersRepository implements IUsersRepository {
       users = await this.ormRepository.find({
         where: {
           id: Not(expept_user_id),
+          role: 'Provider',
         },
       });
     } else {
-      users = await this.ormRepository.find();
+      users = await this.ormRepository.find({
+        where: {
+          role: 'Provider',
+        },
+      });
     }
     return users;
   }

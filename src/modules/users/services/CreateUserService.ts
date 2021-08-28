@@ -9,6 +9,7 @@ interface IRequest {
   name: string;
   email: string;
   password: string;
+  role: string;
 }
 
 @injectable()
@@ -23,7 +24,15 @@ class CreateUser {
     private cacheProvider: ICacheProvider,
   ) {}
 
-  public async execute({ name, email, password }: IRequest): Promise<User> {
+  public async execute({
+    name,
+    email,
+    password,
+    role,
+  }: IRequest): Promise<User> {
+    if (role !== 'Provider' && role !== 'User') {
+      throw new AppError('Perfil de usuario invalido');
+    }
     const emailAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (emailAlreadyExists) {
@@ -36,6 +45,7 @@ class CreateUser {
       name,
       email,
       password: hashPassword,
+      role,
     });
 
     await this.cacheProvider.invalidatePrefix('providers-list');
