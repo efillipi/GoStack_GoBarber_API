@@ -13,6 +13,7 @@ export default interface IAppointmentRepository {
   ): Promise<Appointment[] | undefined>;
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
   find(): Promise<Appointment[]>;
+  findByIdClient(id_client: string): Promise<Appointment[]>;
   findallInDayFromProvider(
     data: IFindallinDayFromProviderDTO,
   ): Promise<Appointment[]>;

@@ -88,6 +88,15 @@ class AppointmentRepository implements IAppointmentRepository {
     const appointment = await this.ormRepository.find();
     return appointment;
   }
+
+  public async findByIdClient(id_client: string): Promise<Appointment[]> {
+    const appointment = await this.ormRepository.find({
+      where: {
+        user_id: id_client,
+      },
+    });
+    return appointment;
+  }
 }
 
 export default AppointmentRepository;

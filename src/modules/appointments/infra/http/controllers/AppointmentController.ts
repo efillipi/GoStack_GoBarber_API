@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
-import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository';
 import NewAppointmentService from '@modules/appointments/services/NewAppointmentService';
+import ShowAppointments from '@modules/appointments/services/ShowAppointments';
 import { container } from 'tsyringe';
 
 class AppointmentController {
   public async getall(request: Request, response: Response): Promise<Response> {
-    const appointmentRepository = new AppointmentRepository();
+    const showAppointments = container.resolve(ShowAppointments);
+    const { id_client } = request.query;
 
-    const appointments = await appointmentRepository.find();
+    const appointments = await showAppointments.execute({
+      id_client: id_client as string,
+    });
 
     return response.status(200).json(appointments);
   }
