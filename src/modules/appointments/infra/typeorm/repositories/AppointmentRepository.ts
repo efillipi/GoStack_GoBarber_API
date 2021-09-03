@@ -94,6 +94,7 @@ class AppointmentRepository implements IAppointmentRepository {
       where: {
         user_id: id_client,
       },
+      relations: ['provider'],
     });
     return appointment;
   }

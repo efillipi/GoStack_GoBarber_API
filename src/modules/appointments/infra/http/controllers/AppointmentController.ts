@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import NewAppointmentService from '@modules/appointments/services/NewAppointmentService';
 import ShowAppointments from '@modules/appointments/services/ShowAppointments';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 class AppointmentController {
   public async getall(request: Request, response: Response): Promise<Response> {
@@ -12,7 +13,7 @@ class AppointmentController {
       id_client: id_client as string,
     });
 
-    return response.status(200).json(appointments);
+    return response.status(200).json(classToClass(appointments));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -27,7 +28,7 @@ class AppointmentController {
       dateAppointment,
     });
 
-    return response.status(201).json(appointment);
+    return response.status(201).json(classToClass(appointment));
   }
 }
 
