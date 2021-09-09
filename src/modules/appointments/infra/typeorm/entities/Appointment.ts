@@ -31,6 +31,9 @@ class Appointment {
   @Column()
   dateAppointment: Date;
 
+  @Column()
+  approved: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

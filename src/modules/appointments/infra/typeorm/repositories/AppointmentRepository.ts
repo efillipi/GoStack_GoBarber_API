@@ -98,6 +98,30 @@ class AppointmentRepository implements IAppointmentRepository {
     });
     return appointment;
   }
+
+  public async save(appointment: Appointment): Promise<Appointment> {
+    await this.ormRepository.save(appointment);
+
+    return appointment;
+  }
+
+  public async delete(id_Appointment: string): Promise<void> {
+    await this.ormRepository.delete(id_Appointment);
+  }
+
+  public async findById(
+    id_Appointment: string,
+  ): Promise<Appointment | undefined> {
+    const appointment = await this.ormRepository.findOne(id_Appointment);
+    return appointment;
+  }
+
+  public async approved(approved: string): Promise<Appointment[] | undefined> {
+    const appointment = await this.ormRepository.find({
+      where: { approved },
+    });
+    return appointment;
+  }
 }
 
 export default AppointmentRepository;

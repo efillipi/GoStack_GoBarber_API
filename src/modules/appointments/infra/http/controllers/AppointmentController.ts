@@ -7,10 +7,11 @@ import { classToClass } from 'class-transformer';
 class AppointmentController {
   public async getall(request: Request, response: Response): Promise<Response> {
     const showAppointments = container.resolve(ShowAppointments);
-    const { id_client } = request.query;
+    const { id_client, approved } = request.query;
 
     const appointments = await showAppointments.execute({
       id_client: id_client as string,
+      approved: approved as string,
     });
 
     return response.status(200).json(classToClass(appointments));
