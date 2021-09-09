@@ -1,7 +1,8 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 
 export default class AlterTableAppointmentsForeignKey1614502677921
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createForeignKey(
       'appointments',

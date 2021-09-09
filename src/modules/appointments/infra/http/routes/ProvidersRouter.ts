@@ -10,8 +10,10 @@ const ProvidersRouter = Router();
 
 ProvidersRouter.use(ensureAuth);
 const providersController = new ProvidersController();
-const providerMonthAvailabilityController = new ProviderMonthAvailabilityController();
-const providerDayAvailabilityController = new ProviderDayAvailabilityController();
+const providerMonthAvailabilityController =
+  new ProviderMonthAvailabilityController();
+const providerDayAvailabilityController =
+  new ProviderDayAvailabilityController();
 
 ProvidersRouter.get('/', providersController.index);
 

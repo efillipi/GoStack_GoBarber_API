@@ -6,7 +6,8 @@ import {
 } from 'typeorm';
 
 export default class AlterTableAppointmentsAddCampoIdUser1625496069790
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'appointments',

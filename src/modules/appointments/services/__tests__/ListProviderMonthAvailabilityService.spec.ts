@@ -8,9 +8,8 @@ describe('ListProviderMonthAvailability', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
 
-    listProviderMonthAvailabilityService = new ListProviderMonthAvailabilityService(
-      fakeAppointmentsRepository,
-    );
+    listProviderMonthAvailabilityService =
+      new ListProviderMonthAvailabilityService(fakeAppointmentsRepository);
   });
 
   it('should be able to create a new appointment', async () => {
@@ -73,13 +72,12 @@ describe('ListProviderMonthAvailability', () => {
       user_id: 'user_id',
     });
 
-    const listProviderMonthAvailability = await listProviderMonthAvailabilityService.execute(
-      {
+    const listProviderMonthAvailability =
+      await listProviderMonthAvailabilityService.execute({
         provider_id: 'provider_id',
         month: 5,
         year: 2021,
-      },
-    );
+      });
 
     expect(listProviderMonthAvailability).toEqual(
       expect.arrayContaining([

@@ -1,7 +1,8 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 
 export default class AlterTableUsertokens1614949807780
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createForeignKey(
       'user_token',
