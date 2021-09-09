@@ -3,6 +3,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 import { injectable, inject } from 'tsyringe';
+import ICacheProvider from '@shared/Container/providers/CacheProvider/models/ICacheProvider';
 
 interface IRequest {
   user_id: string;
@@ -20,6 +21,9 @@ class UpdateProfileService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -64,6 +68,8 @@ class UpdateProfileService {
     user.email = email;
 
     this.usersRepository.save(user);
+
+    await this.cacheProvider.invalidatePrefix('providers-list');
 
     return user;
   }
