@@ -85,7 +85,9 @@ class AppointmentRepository implements IAppointmentRepository {
   }
 
   public async find(): Promise<Appointment[] | undefined> {
-    const appointment = await this.ormRepository.find();
+    const appointment = await this.ormRepository.find({
+      relations: ['provider', 'user'],
+    });
     return appointment;
   }
 
@@ -94,7 +96,7 @@ class AppointmentRepository implements IAppointmentRepository {
       where: {
         user_id: id_client,
       },
-      relations: ['provider'],
+      relations: ['provider', 'user'],
     });
     return appointment;
   }
@@ -112,13 +114,17 @@ class AppointmentRepository implements IAppointmentRepository {
   public async findById(
     id_Appointment: string,
   ): Promise<Appointment | undefined> {
-    const appointment = await this.ormRepository.findOne(id_Appointment);
+    const appointment = await this.ormRepository.findOne({
+      where: { id_Appointment },
+      relations: ['provider', 'user'],
+    });
     return appointment;
   }
 
   public async approved(approved: string): Promise<Appointment[] | undefined> {
     const appointment = await this.ormRepository.find({
       where: { approved },
+      relations: ['provider', 'user'],
     });
     return appointment;
   }

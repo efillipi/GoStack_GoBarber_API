@@ -25,10 +25,10 @@ class ShowAppointments {
   }: IRequest): Promise<Appointment[]> {
     let appointments: Appointment[] = [];
 
-    Boolean(approved);
-
-    if (approved !== 'false' && approved !== 'true') {
-      throw new AppError('approved incorrect');
+    if (approved) {
+      if (approved !== 'false' && approved !== 'true') {
+        throw new AppError('approved incorrect');
+      }
     }
 
     if (!id_client && !approved) {
