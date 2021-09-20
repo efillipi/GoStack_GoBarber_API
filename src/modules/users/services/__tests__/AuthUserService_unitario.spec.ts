@@ -38,6 +38,7 @@ describe('AuthUserService', () => {
     await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'user',
       password: '123456',
     });
 
@@ -53,6 +54,7 @@ describe('AuthUserService', () => {
     const new_user = await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'user',
       password: '123456',
     });
 

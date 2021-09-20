@@ -26,6 +26,7 @@ describe('CreateUser', () => {
       email: 'user@example.com',
       name: 'User Example',
       password: '123456',
+      role: 'User',
     });
 
     expect(user).toHaveProperty('id');
@@ -38,6 +39,7 @@ describe('CreateUser', () => {
       email: 'user@example.com',
       name: 'User Example',
       password: '123456',
+      role: 'User',
     });
 
     await expect(
@@ -45,6 +47,7 @@ describe('CreateUser', () => {
         email: 'user@example.com',
         name: 'User Example',
         password: '123456',
+        role: 'User',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -54,6 +57,7 @@ describe('CreateUser', () => {
       email: 'user@example.com',
       name: 'User Example',
       password: '123456',
+      role: 'User',
     });
 
     const users = await fakeUserRepository.find();

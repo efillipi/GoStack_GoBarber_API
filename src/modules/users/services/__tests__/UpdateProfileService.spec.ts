@@ -33,6 +33,7 @@ describe('UpdateProfileService.spec', () => {
     const user = await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'User',
       password: '123456',
     });
 
@@ -50,12 +51,14 @@ describe('UpdateProfileService.spec', () => {
     const user = await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'User',
       password: '123',
     });
 
     const user2 = await createUserService.execute({
       email: 'user2@example.com',
       name: 'User2 Example',
+      role: 'User',
       password: '123456',
     });
 
@@ -82,6 +85,7 @@ describe('UpdateProfileService.spec', () => {
     const user = await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'User',
       password: '123456',
     });
 
@@ -100,6 +104,7 @@ describe('UpdateProfileService.spec', () => {
     const user = await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'User',
       password: '123456',
     });
 
@@ -117,6 +122,7 @@ describe('UpdateProfileService.spec', () => {
     const user = await createUserService.execute({
       email: 'user@example.com',
       name: 'User Example',
+      role: 'User',
       password: '123456',
     });
 

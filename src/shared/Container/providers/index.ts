@@ -14,8 +14,10 @@ import IMailTemplateProvider from '@shared/Container/providers/MailTemplateProvi
 import HandlebarsMailTemplateProvider from '@shared/Container/providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
 
 import ICacheProvider from '@shared/Container/providers/CacheProvider/models/ICacheProvider';
-
 import RedisCacheProvider from '@shared/Container/providers/CacheProvider/implementations/RedisCacheProvider';
+
+import IOnesignalProvider from '@shared/Container/providers/OnesignalProvider/models/IOnesignalProvider';
+import OnesignalProvider from '@shared/Container/providers/OnesignalProvider/implementations/OnesignalProvider';
 
 const disk_providers = {
   disk: DiskStorageProvider,
@@ -49,4 +51,9 @@ const providers_redis = {
 container.registerSingleton<ICacheProvider>(
   'CacheProvider',
   providers_redis.redis,
+);
+
+container.registerSingleton<IOnesignalProvider>(
+  'OnesignalProvider',
+  OnesignalProvider,
 );

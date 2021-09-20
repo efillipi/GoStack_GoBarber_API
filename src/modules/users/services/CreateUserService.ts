@@ -30,8 +30,8 @@ class CreateUser {
     password,
     role,
   }: IRequest): Promise<User> {
-    if (role !== 'Provider' && role !== 'User') {
-      throw new AppError('Perfil de usuario invalido');
+    if (role !== 'Provider') {
+      role = 'User';
     }
     const emailAlreadyExists = await this.usersRepository.findByEmail(email);
 
