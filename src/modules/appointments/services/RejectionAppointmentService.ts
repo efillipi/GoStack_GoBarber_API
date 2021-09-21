@@ -35,7 +35,7 @@ class RejectionAppointmentService {
     );
 
     await this.onesignalProvider.send({
-      textSend: `Agendamento Cancelado para dia ${dateFormatted}`,
+      textSend: `Agendamento Rejeitado para dia ${dateFormatted}`,
       user_id: appointment.user_id,
     });
   }
