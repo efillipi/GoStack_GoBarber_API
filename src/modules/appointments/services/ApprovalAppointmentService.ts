@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import { format } from 'date-fns';
 import IOnesignalProvider from '@shared/Container/providers/OnesignalProvider/models/IOnesignalProvider';
+import ICacheProvider from '@shared/Container/providers/CacheProvider/models/ICacheProvider';
 import IAppointmentRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
@@ -16,6 +17,9 @@ class ApprovalAppointmentService {
 
     @inject('OnesignalProvider')
     private onesignalProvider: IOnesignalProvider,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({ id_Appointment }: IRequest): Promise<void> {
@@ -40,6 +44,12 @@ class ApprovalAppointmentService {
       textSend: `Agendamento Aprovado para dia ${dateFormatted}`,
       user_id: appointment.user_id,
     });
+    await this.cacheProvider.invalidate(
+      `provider-appointments:${appointment.provider_id}:${format(
+        appointment.dateAppointment,
+        'yyyy-M-d',
+      )}`,
+    );
   }
 }
 
