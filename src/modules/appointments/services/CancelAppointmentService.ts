@@ -7,10 +7,11 @@ import IAppointmentRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
   id_Appointment: string;
+  user_id: string;
 }
 
 @injectable()
-class RejectionAppointmentService {
+class CancelAppointmentService {
   constructor(
     @inject('AppointmentRepository')
     private appointmentsRepository: IAppointmentRepository,
@@ -22,7 +23,7 @@ class RejectionAppointmentService {
     private cacheProvider: ICacheProvider,
   ) {}
 
-  public async execute({ id_Appointment }: IRequest): Promise<void> {
+  public async execute({ id_Appointment, user_id }: IRequest): Promise<void> {
     const appointment = await this.appointmentsRepository.findById(
       id_Appointment,
     );
@@ -30,18 +31,21 @@ class RejectionAppointmentService {
     if (!appointment) {
       throw new AppError('Appointment incorrect');
     }
-
-    await this.appointmentsRepository.delete(id_Appointment);
-
     const dateFormatted = format(
       appointment.dateAppointment,
       "dd/MM/yyyy 'às' HH:mm'h'",
     );
-
-    await this.onesignalProvider.send({
-      textSend: `Agendamento Rejeitado para dia ${dateFormatted}, Poderia escolher um outro horário?`,
-      user_id: appointment.user_id,
-    });
+    if (appointment.provider_id === user_id) {
+      await this.onesignalProvider.send({
+        textSend: `Agendamento Cancelado para dia ${dateFormatted}`,
+        user_id: appointment.user_id,
+      });
+    } else {
+      await this.onesignalProvider.send({
+        textSend: `Agendamento Cancelado para dia ${dateFormatted}`,
+        user_id: appointment.provider_id,
+      });
+    }
 
     await this.cacheProvider.invalidate(
       `provider-appointments:${appointment.provider_id}:${format(
@@ -49,7 +53,9 @@ class RejectionAppointmentService {
         'yyyy-M-d',
       )}`,
     );
+
+    await this.appointmentsRepository.delete(id_Appointment);
   }
 }
 
-export default RejectionAppointmentService;
+export default CancelAppointmentService;

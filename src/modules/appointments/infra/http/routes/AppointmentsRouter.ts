@@ -6,6 +6,7 @@ import AppointmentController from '@modules/appointments/infra/http/controllers/
 import ProviderAppointmentsController from '@modules/appointments/infra/http/controllers/ProviderAppointmentsController';
 import RejectionAppointmentController from '@modules/appointments/infra/http/controllers/RejectionAppointmentController';
 import ApprovalAppointmentController from '@modules/appointments/infra/http/controllers/ApprovalAppointmentController';
+import CancelAppointmentController from '@modules/appointments/infra/http/controllers/CancelAppointmentController';
 
 const AppointmentsRouter = Router();
 
@@ -14,6 +15,7 @@ const appointmentController = new AppointmentController();
 const providerAppointmentsController = new ProviderAppointmentsController();
 const rejectionAppointmentController = new RejectionAppointmentController();
 const approvalAppointmentController = new ApprovalAppointmentController();
+const cancelAppointmentController = new CancelAppointmentController();
 
 AppointmentsRouter.get('/', appointmentController.getall);
 
@@ -47,6 +49,16 @@ AppointmentsRouter.post(
     },
   }),
   approvalAppointmentController.index,
+);
+
+AppointmentsRouter.post(
+  '/:id/cancel',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  cancelAppointmentController.index,
 );
 
 export default AppointmentsRouter;
