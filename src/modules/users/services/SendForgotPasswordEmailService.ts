@@ -44,13 +44,12 @@ class SendForgotPasswordEmailService {
         email,
         name: user.name,
       },
-      subject: '[GoBarber] - Recuperação de senha ',
+      subject: '[GoMobile] - Recuperação de senha ',
       templateData: {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
           token,
-          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
         },
       },
     });
