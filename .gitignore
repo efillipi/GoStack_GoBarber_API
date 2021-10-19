@@ -10,3 +10,4 @@ tmp/uploads/*
 !tmp/uploads/.gitkeep
 private-key.pem
 public-key.pem
+.DS_Store

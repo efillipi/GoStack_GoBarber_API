@@ -18,12 +18,11 @@ DB_USER=
 DB_PASSWORD=
 DB_DATABASE=
 
-
 # Banco de dados Redis
 
 REDIS_HOST=
 REDIS_PORT=
-REDIS_PASS
+REDIS_PASS=
 
 # Banco de dados Mongo
 
@@ -41,3 +40,7 @@ MAIL_DRIVER=
 
 # Storage
 STORAGE_DRIVER=
+
+# Onesignal
+ONESIGNAL_APP_ID=
+ONESIGNAL_BEARER=
