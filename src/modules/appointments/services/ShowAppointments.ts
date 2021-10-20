@@ -5,8 +5,8 @@ import AppError from '@shared/errors/AppError';
 import IAppointmentRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
-  id_client: string;
-  approved: string;
+  id_client?: string;
+  approved?: string;
 }
 
 @injectable()
@@ -33,7 +33,7 @@ class ShowAppointments {
 
     if (!id_client && !approved) {
       appointments = await this.appointmentsRepository.find();
-    } else if (!approved) {
+    } else if (approved && id_client) {
       const user = await this.usersRepository.findById(id_client);
 
       if (!user) {
@@ -42,8 +42,9 @@ class ShowAppointments {
 
       appointments = await this.appointmentsRepository.findByIdClient(
         id_client,
+        approved,
       );
-    } else {
+    } else if (approved && !id_client) {
       appointments = await this.appointmentsRepository.approved(approved);
     }
 

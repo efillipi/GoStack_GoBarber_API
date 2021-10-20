@@ -14,7 +14,7 @@ export default interface IAppointmentRepository {
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
   find(): Promise<Appointment[]>;
   findById(id_Appointment: string): Promise<Appointment>;
-  findByIdClient(id_client: string): Promise<Appointment[]>;
+  findByIdClient(id_client: string, approved: string): Promise<Appointment[]>;
   findallInDayFromProvider(
     data: IFindallinDayFromProviderDTO,
   ): Promise<Appointment[]>;
