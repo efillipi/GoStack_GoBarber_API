@@ -10,20 +10,18 @@ export default class CreateUserToken1614948675588
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'int',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
             name: 'user_id',
-            type: 'uuid',
+            type: 'int',
           },
           {
             name: 'token',
-            type: 'uuid',
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -41,8 +39,6 @@ export default class CreateUserToken1614948675588
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('user_token', 'fk_user_token_user_id');
-
     await queryRunner.dropTable('user_token');
   }
 }

@@ -8,7 +8,7 @@ import {
 
 @Entity('user_token')
 class UserToken {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @Column()

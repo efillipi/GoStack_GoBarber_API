@@ -23,7 +23,7 @@ AppointmentsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      provider_id: Joi.string().uuid().required(),
+      provider_id: Joi.string().required(),
       dateAppointment: Joi.date().required(),
     },
   }),
@@ -35,7 +35,7 @@ AppointmentsRouter.post(
   '/:id/rejection',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
+      id: Joi.string().required(),
     },
   }),
   rejectionAppointmentController.index,
@@ -45,7 +45,7 @@ AppointmentsRouter.post(
   '/:id/approval',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
+      id: Joi.string().required(),
     },
   }),
   approvalAppointmentController.index,
@@ -55,7 +55,7 @@ AppointmentsRouter.post(
   '/:id/cancel',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
+      id: Joi.string().required(),
     },
   }),
   cancelAppointmentController.index,

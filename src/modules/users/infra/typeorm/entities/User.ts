@@ -10,7 +10,7 @@ import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')
 class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @Column()

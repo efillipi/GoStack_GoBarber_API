@@ -10,14 +10,14 @@ export default class CreateAppointments1614015549254
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'int',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
             name: 'provider_id',
-            type: 'uuid',
+            type: 'int',
             isNullable: true,
           },
           {

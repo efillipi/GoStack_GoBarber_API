@@ -8,7 +8,7 @@ const { secret, expiresIn } = authConfig.jtw;
 class JWTAuthProvider implements IAuthProvider {
   public async sing(user: User): Promise<string> {
     const token = sign({}, secret, {
-      subject: user.id,
+      subject: String(user.id),
       expiresIn,
     });
 

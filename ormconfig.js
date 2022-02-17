@@ -20,15 +20,4 @@ module.exports = [
       migrationsDir: process.env.TYPEORM_CLI,
     },
   },
-  {
-    name: process.env.MONGO_DB_NAME,
-    type: process.env.MONGO_DB_CLIENT,
-    host: process.env.MONGO_DB_HOST,
-    port: process.env.MONGO_DB_PORT,
-    username: process.env.MONGO_DB_USER,
-    password: process.env.MONGO_DB_PASSWORD,
-    database: process.env.MONGO_DB_DATABASE,
-    useUnifiedTopology: process.env.MONGO_DB_USE_UNIFIED_TOPOLOGY,
-    entities: [process.env.MONGO_TYPEORM_ENTITIES],
-  },
 ];
