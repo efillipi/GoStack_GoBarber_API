@@ -31,6 +31,10 @@ class RejectionAppointmentService {
       throw new AppError('Appointment incorrect');
     }
 
+    if (appointment.approved === true) {
+      throw new AppError('Appointment incorrect');
+    }
+
     await this.appointmentsRepository.delete(id_Appointment);
 
     const dateFormatted = format(

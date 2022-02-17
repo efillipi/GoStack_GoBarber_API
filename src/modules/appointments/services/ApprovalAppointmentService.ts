@@ -31,6 +31,10 @@ class ApprovalAppointmentService {
       throw new AppError('Appointment incorrect');
     }
 
+    if (appointment.approved === true) {
+      throw new AppError('Appointment incorrect');
+    }
+
     appointment.approved = true;
 
     await this.appointmentsRepository.save(appointment);
